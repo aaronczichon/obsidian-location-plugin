@@ -18,3 +18,8 @@ Longitude: -63.57530151565183
 To make the plugin work, after installation you are required to add your Mapbox API key into the plugin settings. You can get a free API key from [Mapbox](https://www.mapbox.com/).
 
 ![Obsidian location plugin settings](/docs/settings_screenshot.png)
+
+## Support
+
+If you like the plugin and want to support the development, you can [buy me a coffee](https://buymeacoffee.com/aaronczichon.de).  
+[![buy me a coffee](/docs/bmc.png)](https://buymeacoffee.com/aaronczichon.de)
