@@ -1,0 +1,11 @@
+{
+	"id": "obsidian-location-plugin",
+	"name": "Location Plugin",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Show a map inside your notes with a specific format.",
+	"author": "Aaron Czichon",
+	"authorUrl": "https://aaronczichon.de",
+	"fundingUrl": "https://buymeacoffee.com/aaronczichon.de",
+	"isDesktopOnly": false
+}
