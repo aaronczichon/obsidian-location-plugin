@@ -1,6 +1,6 @@
 {
-	"name": "obsidian-location-plugin",
-	"version": "1.0.0",
+	"name": "mapbox-location-plugin",
+	"version": "1.0.1",
 	"description": "Show a map inside your notes with a specific format.",
 	"main": "main.js",
 	"scripts": {
