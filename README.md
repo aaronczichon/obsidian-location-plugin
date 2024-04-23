@@ -13,6 +13,9 @@ Latitude: 44.64266326577057
 Longitude: -63.57530151565183  
 \```
 
+This is how it looks rendered:
+![Screenshot of obsidian with rendered location image](/docs/rendered.png)
+
 ## Configuration
 
 To make the plugin work, after installation you are required to add your Mapbox API key into the plugin settings. You can get a free API key from [Mapbox](https://www.mapbox.com/).
