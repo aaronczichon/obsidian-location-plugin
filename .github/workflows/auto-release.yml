@@ -17,7 +17,7 @@ jobs:
             - name: Get Version
               id: get_version
               # E.g. converts ref/tags/v0.0.1 -> 0.0.1
-              run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -c 4-)" >> $GITHUB_OUTPUT
+              run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -c 1-)" >> $GITHUB_OUTPUT
             - name: Get Label
               id: get_label
               # E.g. converts 0.0.1-beta.1 -> beta
