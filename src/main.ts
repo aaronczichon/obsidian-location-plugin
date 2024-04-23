@@ -24,8 +24,14 @@ export default class MapboxPlugin extends Plugin {
 		try {
 			const locations = source.split("\n");
 
-			const latitude = locations[0].replace("Latitude: ", "");
-			const longitude = locations[1].replace("Longitude: ", "");
+			const latitude = locations[0]
+				.toLowerCase()
+				.replace("latitude: ", "")
+				.trim();
+			const longitude = locations[1]
+				.toLowerCase()
+				.replace("longitude: ", "")
+				.trim();
 
 			const imageUrl = this.getStaticMapImageUrl(latitude, longitude);
 
