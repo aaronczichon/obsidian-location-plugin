@@ -1,7 +1,7 @@
 {
-	"id": "obsidian-location-plugin",
-	"name": "Location Plugin",
-	"version": "1.0.0",
+	"id": "mapbox-location",
+	"name": "Obsidian Mapbox Location Plugin",
+	"version": "1.0.1",
 	"minAppVersion": "0.15.0",
 	"description": "Show a map inside your notes with a specific format.",
 	"author": "Aaron Czichon",
