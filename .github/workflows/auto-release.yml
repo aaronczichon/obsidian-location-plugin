@@ -43,8 +43,8 @@ jobs:
             - name: Build Plugin
               run: |
                   npm install
-                  npm run build
                   npm run version
+                  npm run build
             - uses: "marvinpinto/action-automatic-releases@latest"
               name: Publish Release
               with:
@@ -67,8 +67,8 @@ jobs:
             - name: Build Plugin
               run: |
                   npm install
-                  npm run build
                   npm run version
+                  npm run build
             - uses: "marvinpinto/action-automatic-releases@latest"
               name: Publish Release
               with:
