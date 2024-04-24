@@ -37,9 +37,7 @@ export default class MapboxPlugin extends Plugin {
 
 			const imageElement = document.createElement("img");
 			imageElement.src = imageUrl;
-			imageElement.style.display = "block";
-			imageElement.style.maxWidth = "100%";
-			imageElement.style.margin = "1rem auto";
+			imageElement.classList.add("mapbox-image");
 
 			el.appendChild(imageElement);
 		} catch (e) {
