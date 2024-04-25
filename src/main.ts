@@ -41,7 +41,7 @@ export default class MapboxPlugin extends Plugin {
 
 			el.appendChild(imageElement);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 	};
 

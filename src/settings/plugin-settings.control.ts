@@ -6,7 +6,7 @@ export const apiTokenSetting = (
 	plugin: MapboxPlugin,
 ) => {
 	new Setting(containerEl)
-		.setName("Mapbox API Token")
+		.setName("Mapbox API token")
 		.setDesc("Please provide your mapbox API token")
 		.addText((text) =>
 			text
@@ -24,7 +24,7 @@ export const markerSizeSetting = (
 	plugin: MapboxPlugin,
 ) => {
 	new Setting(containerEl)
-		.setName("Marker Size")
+		.setName("Marker size")
 		.setDesc("size of the marker on the map")
 		.addDropdown((text) =>
 			text
@@ -44,7 +44,7 @@ export const markerColorSetting = (
 	plugin: MapboxPlugin,
 ) => {
 	new Setting(containerEl)
-		.setName("Marker Color")
+		.setName("Marker color")
 		.setDesc("Color of the marker on the map")
 		.addColorPicker((text) =>
 			text
