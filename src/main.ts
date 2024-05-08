@@ -1,4 +1,5 @@
 import { Notice, Plugin } from "obsidian";
+import { processCodeBlock } from "./functions/process-code.func";
 import { LocationSettingTab } from "./settings/plugin-settings.tab";
 import {
 	DEFAULT_SETTINGS,
@@ -22,18 +23,20 @@ export default class MapboxPlugin extends Plugin {
 
 	public processLocationCodeBlock = (source: string, el: HTMLElement) => {
 		try {
-			const locations = source.split("\n");
+			const extractedData = processCodeBlock(source);
 
-			const latitude = locations[0]
-				.toLowerCase()
-				.replace("latitude: ", "")
-				.trim();
-			const longitude = locations[1]
-				.toLowerCase()
-				.replace("longitude: ", "")
-				.trim();
+			if (!extractedData.latitude || !extractedData.longitude) {
+				this.showNotice(
+					"Error processing location code block. Latitude and Longitude are required.",
+				);
+				return;
+			}
 
-			const imageUrl = this.getStaticMapImageUrl(latitude, longitude);
+			const imageUrl = this.getStaticMapImageUrl(
+				extractedData.latitude,
+				extractedData.longitude,
+				extractedData.markerUrl,
+			);
 
 			const imageElement = document.createElement("img");
 			imageElement.src = imageUrl;
@@ -41,13 +44,16 @@ export default class MapboxPlugin extends Plugin {
 
 			el.appendChild(imageElement);
 		} catch (e) {
-			console.error(e);
+			this.showNotice(
+				"Error processing location code block. Please check syntax or missing settings.",
+			);
 		}
 	};
 
 	public getStaticMapImageUrl = (
 		latitude: string,
 		longitude: string,
+		codeMarker: string = "",
 	): string => {
 		const mapboxAccessToken = this.settings.mapboxToken;
 		if (!mapboxAccessToken) {
@@ -56,11 +62,9 @@ export default class MapboxPlugin extends Plugin {
 			);
 			return "";
 		}
+		const markerUrl = this.getMarkerUrl(codeMarker);
 
-		const markerColor = this.settings.markerColor;
-		const markerSize = this.settings.markerSize;
-
-		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-${markerSize}-home+${markerColor}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
+		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
 
 		return imageUrl;
 	};
@@ -79,5 +83,16 @@ export default class MapboxPlugin extends Plugin {
 
 	private showNotice = (message: string) => {
 		new Notice(message, 5000);
+	};
+
+	private getMarkerUrl = (codeMarker: string) => {
+		// If a marker URL is set in code block use it
+		if (codeMarker) return `url-${encodeURIComponent(codeMarker)}`;
+		// If a marker URL is set in settings use it
+		if (this.settings.markerUrl)
+			return `url-${encodeURIComponent(this.settings.markerUrl)}`;
+
+		// if no marker URL is set at all, use the default
+		return `pin-${this.settings.markerSize}-home+${this.settings.markerColor}`;
 	};
 }

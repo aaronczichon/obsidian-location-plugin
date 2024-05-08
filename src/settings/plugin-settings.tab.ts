@@ -4,6 +4,7 @@ import {
 	apiTokenSetting,
 	markerColorSetting,
 	markerSizeSetting,
+	markerUrlSetting,
 } from "./plugin-settings.control";
 
 export class LocationSettingTab extends PluginSettingTab {
@@ -22,5 +23,6 @@ export class LocationSettingTab extends PluginSettingTab {
 		apiTokenSetting(containerEl, this.plugin);
 		markerSizeSetting(containerEl, this.plugin);
 		markerColorSetting(containerEl, this.plugin);
+		markerUrlSetting(containerEl, this.plugin);
 	}
 }

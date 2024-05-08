@@ -19,13 +19,36 @@ export const apiTokenSetting = (
 		);
 };
 
+export const markerUrlSetting = (
+	containerEl: HTMLElement,
+	plugin: MapboxPlugin,
+) => {
+	new Setting(containerEl)
+		.setName("Custom Marker Icon URL")
+		.setDesc(
+			"You can define a custom marker icon by providing a URL which will be used as default marker icon",
+		)
+		.setTooltip("Recommended size: 50x50px, PNG or JPG format.")
+		.addText((text) =>
+			text
+				.setPlaceholder("https://example.com/icon.png")
+				.setValue(plugin.settings.markerUrl)
+				.onChange(async (value) => {
+					plugin.settings.markerUrl = value;
+					await plugin.saveSettings();
+				}),
+		);
+};
+
 export const markerSizeSetting = (
 	containerEl: HTMLElement,
 	plugin: MapboxPlugin,
 ) => {
 	new Setting(containerEl)
 		.setName("Marker size")
-		.setDesc("size of the marker on the map")
+		.setDesc(
+			"Size of the marker on the map. This is ignored if a custom marker url is set.",
+		)
 		.addDropdown((text) =>
 			text
 				.addOption("s", "small")
