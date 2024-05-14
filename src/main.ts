@@ -36,6 +36,7 @@ export default class MapboxPlugin extends Plugin {
 				extractedData.latitude,
 				extractedData.longitude,
 				extractedData.markerUrl,
+				extractedData.makiIcon,
 			);
 
 			const imageElement = document.createElement("img");
@@ -54,6 +55,7 @@ export default class MapboxPlugin extends Plugin {
 		latitude: string,
 		longitude: string,
 		codeMarker: string = "",
+		makiIcon: string = "",
 	): string => {
 		const mapboxAccessToken = this.settings.mapboxToken;
 		if (!mapboxAccessToken) {
@@ -62,7 +64,7 @@ export default class MapboxPlugin extends Plugin {
 			);
 			return "";
 		}
-		const markerUrl = this.getMarkerUrl(codeMarker);
+		const markerUrl = this.getMarkerUrl(codeMarker, makiIcon);
 
 		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
 
@@ -85,7 +87,7 @@ export default class MapboxPlugin extends Plugin {
 		new Notice(message, 5000);
 	};
 
-	private getMarkerUrl = (codeMarker: string) => {
+	private getMarkerUrl = (codeMarker: string, makiIcon: string) => {
 		// If a marker URL is set in code block use it
 		if (codeMarker) return `url-${encodeURIComponent(codeMarker)}`;
 		// If a marker URL is set in settings use it
@@ -93,6 +95,6 @@ export default class MapboxPlugin extends Plugin {
 			return `url-${encodeURIComponent(this.settings.markerUrl)}`;
 
 		// if no marker URL is set at all, use the default
-		return `pin-${this.settings.markerSize}-home+${this.settings.markerColor}`;
+		return `pin-${this.settings.markerSize}-${makiIcon || "home"}+${this.settings.markerColor}`;
 	};
 }

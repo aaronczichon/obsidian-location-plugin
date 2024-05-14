@@ -4,11 +4,13 @@ export const processCodeBlock = (source: string) => {
 	const latitude = findLatitude(rows);
 	const longitude = findLongitude(rows);
 	const markerUrl = findMarkerUrl(rows);
+	const makiIcon = findMarkerIcon(rows);
 
 	return {
 		latitude,
 		longitude,
 		markerUrl,
+		makiIcon,
 	};
 };
 
@@ -37,4 +39,11 @@ const findMarkerUrl = (rows: string[]) => {
 			.replace("marker-url:", "")
 			.trim();
 	return markerUrl;
+};
+
+const findMarkerIcon = (rows: string[]) => {
+	let makiIcon = rows.find((l) => l.toLowerCase().startsWith("maki:"));
+	if (makiIcon)
+		makiIcon = makiIcon.toLocaleLowerCase().replace("maki:", "").trim();
+	return makiIcon;
 };
