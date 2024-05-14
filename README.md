@@ -32,6 +32,10 @@ This plugin uses mapbox for rendering the map image. You should be aware of the 
 
 For more data privacy information about Mapbox, please refer to the [Mapbox Privacy Policy](https://www.mapbox.com/privacy/).
 
+## Changelog
+
+Full changelog of the latest versions can be found in the [CHANGELOG.md](./CHANGELOG.md) file.
+
 ## Support
 
 If you like the plugin and want to support the development, you can [buy me a coffee](https://buymeacoffee.com/aaronczichon.de).  
