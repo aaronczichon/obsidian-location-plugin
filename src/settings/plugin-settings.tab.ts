@@ -2,6 +2,7 @@ import { App, PluginSettingTab } from "obsidian";
 import MapboxPlugin from "../main";
 import {
 	apiTokenSetting,
+	mapStyleSetting,
 	markerColorSetting,
 	markerSizeSetting,
 	markerUrlSetting,
@@ -21,6 +22,7 @@ export class LocationSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		apiTokenSetting(containerEl, this.plugin);
+		mapStyleSetting(containerEl, this.plugin);
 		markerSizeSetting(containerEl, this.plugin);
 		markerColorSetting(containerEl, this.plugin);
 		markerUrlSetting(containerEl, this.plugin);

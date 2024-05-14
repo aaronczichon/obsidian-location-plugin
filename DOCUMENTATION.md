@@ -24,7 +24,7 @@ Longitude: -63.57530151565183
 It doesn't matter if you provide the latitude or longitude first. The plugin will recognize the values and generate the map image.  
 Also it's not relevant if you write `Latitude` or `latitude` and `Longitude` or `longitude`.
 
-## Changing the icon
+### Changing the icon
 
 There are two options to change the icon. You can either use the marker icon setting in the plugin settings. This will override th icon on all maps globally.  
 If you want a custom icon for a specific map, you can add a `marker-url` field to the code block. The value of the field should be the URL to the icon you want to use.
@@ -45,6 +45,35 @@ maki: fire-station
 
 This is the block above rendered with a custom maki icon:
 ![Screenshot mapbox maki icon](./docs/custom_maki.png)
+
+### Change style
+
+You can change the style of the map by selecting a different style in the plugin settings.
+![Screenshot map styles](./docs/map-style-settings.png)
+
+This setting changes every map in your vault and is plugin-global.  
+To change the style of a map only for a specific map, you can add a `style` field to the code block. The value of the field should be the name of the style you want to use.
+
+```location
+latitude: 44.64266326577057
+longitude: -63.57530151565183
+maki: fire-station
+style: navigation-night-v1
+```
+
+The result looks like this:
+![Screenshot: map with custom style](./docs/code-style-result.png)
+
+Following values for the code block are supported:
+
+-   streets-v12
+-   outdoors-v12
+-   light-v11
+-   dark-v11
+-   satellite-v9
+-   satellite-streets-v12
+-   navigation-day-v1
+-   navigation-night-v1
 
 **Hint**  
 Maki icon can only defined in the code block and can't be defined globally. If no custom marker or maki icon is defined, the map falls back to the default marker icon (a home icon).  
