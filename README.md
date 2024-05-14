@@ -20,7 +20,11 @@ This is how it looks rendered:
 
 To make the plugin work, after installation you are required to add your Mapbox API key into the plugin settings. You can get a free API key from [Mapbox](https://www.mapbox.com/).
 
-![Obsidian location plugin settings](/docs/settings_screenshot.png)
+![Obsidian location plugin settings](/docs/settings.png)
+
+## Full documentation
+
+The full documentation with all options to configure your map can be found in the [DOCUMENTATION.md](./DOCUMENTATION.md) file.
 
 ## Data Privacy
 
