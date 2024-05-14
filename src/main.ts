@@ -66,7 +66,7 @@ export default class MapboxPlugin extends Plugin {
 		}
 		const markerUrl = this.getMarkerUrl(codeMarker, makiIcon);
 
-		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
+		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${this.settings.mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
 
 		return imageUrl;
 	};

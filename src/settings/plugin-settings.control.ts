@@ -62,6 +62,31 @@ export const markerSizeSetting = (
 		);
 };
 
+export const mapStyleSetting = (
+	containerEl: HTMLElement,
+	plugin: MapboxPlugin,
+) => {
+	new Setting(containerEl)
+		.setName("Default map style")
+		.setDesc("Select the default style which is used for your maps.")
+		.addDropdown((text) =>
+			text
+				.addOption("streets-v12", "Streets")
+				.addOption("outdoors-v12", "Outdoors")
+				.addOption("light-v11", "Light")
+				.addOption("dark-v11", "Dark")
+				.addOption("satellite-v9", "Satellite")
+				.addOption("satellite-streets-v12", "Satellite Streets")
+				.addOption("navigation-day-v1", "Navigation Day")
+				.addOption("navigation-night-v1", "Navigation Night")
+				.setValue(plugin.settings.mapStyle)
+				.onChange(async (value) => {
+					plugin.settings.mapStyle = value;
+					await plugin.saveSettings();
+				}),
+		);
+};
+
 export const markerColorSetting = (
 	containerEl: HTMLElement,
 	plugin: MapboxPlugin,
