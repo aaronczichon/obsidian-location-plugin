@@ -24,7 +24,7 @@ export const markerUrlSetting = (
 	plugin: MapboxPlugin,
 ) => {
 	new Setting(containerEl)
-		.setName("Custom Marker Icon URL")
+		.setName("Custom marker URL")
 		.setDesc(
 			"You can define a custom marker icon by providing a URL which will be used as default marker icon",
 		)

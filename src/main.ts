@@ -1,5 +1,6 @@
 import { Notice, Plugin } from "obsidian";
 import { processCodeBlock } from "./functions/process-code.func";
+import { checkVersionUpdate } from "./functions/version-hint.func";
 import { LocationSettingTab } from "./settings/plugin-settings.tab";
 import {
 	DEFAULT_SETTINGS,
@@ -19,6 +20,8 @@ export default class MapboxPlugin extends Plugin {
 		);
 
 		this.addSettingTab(new LocationSettingTab(this.app, this));
+
+		await checkVersionUpdate(this);
 	}
 
 	public processLocationCodeBlock = (source: string, el: HTMLElement) => {
@@ -67,6 +70,12 @@ export default class MapboxPlugin extends Plugin {
 			return "";
 		}
 		const markerUrl = this.getMarkerUrl(codeMarker, makiIcon);
+
+		if (markerUrl && makiIcon) {
+			this.showNotice(
+				"Both marker URL and Maki icon are set. Setting both is not a valid combination.",
+			);
+		}
 
 		const mapStyle = style || this.settings.mapStyle;
 
