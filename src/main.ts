@@ -68,6 +68,12 @@ export default class MapboxPlugin extends Plugin {
 		}
 		const markerUrl = this.getMarkerUrl(codeMarker, makiIcon);
 
+		if (markerUrl && makiIcon) {
+			this.showNotice(
+				"Both marker URL and Maki icon are set. Setting both is not a valid combination.",
+			);
+		}
+
 		const mapStyle = style || this.settings.mapStyle;
 
 		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
