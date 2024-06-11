@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1
+
+### Improvements
+
+-   [💎] Renaming `Custom Marker Icon URL` to `Custom marker URL` to follow Obsidian guidelines
+
 ## 1.1.0
 
 ### Features
