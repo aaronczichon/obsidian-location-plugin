@@ -41,6 +41,7 @@ export default class MapboxPlugin extends Plugin {
 				extractedData.markerUrl,
 				extractedData.makiIcon,
 				extractedData.mapStyle,
+				extractedData.mapZoom,
 			);
 
 			const imageElement = document.createElement("img");
@@ -61,6 +62,7 @@ export default class MapboxPlugin extends Plugin {
 		codeMarker: string = "",
 		makiIcon: string = "",
 		style: string = "",
+		zoom: string,
 	): string => {
 		const mapboxAccessToken = this.settings.mapboxToken;
 		if (!mapboxAccessToken) {
@@ -79,7 +81,9 @@ export default class MapboxPlugin extends Plugin {
 
 		const mapStyle = style || this.settings.mapStyle;
 
-		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},14/800x400?access_token=${mapboxAccessToken}`;
+		const mapZoom = zoom || this.settings.mapZoom;
+
+		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},${mapZoom}/800x400?access_token=${mapboxAccessToken}`;
 
 		return imageUrl;
 	};

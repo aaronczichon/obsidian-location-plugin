@@ -4,6 +4,7 @@ export interface LocationPluginSettings {
 	markerColor: string;
 	markerUrl: string;
 	mapStyle: string;
+	mapZoom: string;
 }
 
 export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
@@ -12,4 +13,5 @@ export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
 	markerColor: "ff0000",
 	markerUrl: "",
 	mapStyle: "streets-v12",
+	mapZoom: "10"
 };

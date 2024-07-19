@@ -6,6 +6,7 @@ export const processCodeBlock = (source: string) => {
 	const markerUrl = findMarkerUrl(rows);
 	const makiIcon = findMarkerIcon(rows);
 	const mapStyle = findMapStyle(rows);
+	const mapZoom = findMapZoom(rows);
 
 	return {
 		latitude,
@@ -13,6 +14,7 @@ export const processCodeBlock = (source: string) => {
 		markerUrl,
 		makiIcon,
 		mapStyle,
+		mapZoom
 	};
 };
 
@@ -56,3 +58,10 @@ const findMapStyle = (rows: string[]) => {
 		mapStyle = mapStyle.toLocaleLowerCase().replace("style:", "").trim();
 	return mapStyle;
 };
+
+var findMapZoom = (rows) => {
+	let mapZoom = rows.find((l) => l.toLowerCase().startsWith("zoom:"));
+	if (mapZoom)
+	  mapZoom = mapZoom.toLocaleLowerCase().replace("zoom:", "").trim();
+	return mapZoom;
+  };
