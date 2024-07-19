@@ -13,5 +13,5 @@ export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
 	markerColor: "ff0000",
 	markerUrl: "",
 	mapStyle: "streets-v12",
-	mapZoom: "10"
+	mapZoom: "14"
 };

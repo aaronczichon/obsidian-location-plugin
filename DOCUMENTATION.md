@@ -92,11 +92,11 @@ longitude: -63.57530151565183
 zoom: 1
 ```
 
-Zoom value 10 (default):
+Zoom value 14 (default):
 ```location
 latitude: 44.64266326577057
 longitude: -63.57530151565183
-zoom: 10
+zoom: 14
 ```
 
 Zoom value 20 (default):
