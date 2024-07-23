@@ -59,7 +59,7 @@ const findMapStyle = (rows: string[]) => {
 	return mapStyle;
 };
 
-var findMapZoom = (rows) => {
+const findMapZoom = (rows: string[]) => {
 	let mapZoom = rows.find((l) => l.toLowerCase().startsWith("zoom:"));
 	if (mapZoom)
 	  mapZoom = mapZoom.toLocaleLowerCase().replace("zoom:", "").trim();
