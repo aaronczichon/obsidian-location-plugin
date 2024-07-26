@@ -103,3 +103,25 @@ export const markerColorSetting = (
 				}),
 		);
 };
+
+export const mapZoomSetting = (
+	containerEl: HTMLElement,
+	plugin: MapboxPlugin,
+) => {
+	new Setting(containerEl)
+		.setName("Map zoom")
+		.setDesc("Set the default zoom for each map image.")
+		.addDropdown((text) =>
+			text
+				.addOption("20", "20 - closest")
+				.addOption("15", "15")
+				.addOption("10", "10")
+				.addOption("5", "5")
+				.addOption("1", "1 - furthest")
+				.setValue(plugin.settings.mapZoom)
+				.onChange(async (value) => {
+					plugin.settings.mapZoom = value;
+					await plugin.saveSettings();
+				}),
+		);
+};

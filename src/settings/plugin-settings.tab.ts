@@ -6,6 +6,7 @@ import {
 	markerColorSetting,
 	markerSizeSetting,
 	markerUrlSetting,
+	mapZoomSetting,
 } from "./plugin-settings.control";
 
 export class LocationSettingTab extends PluginSettingTab {
@@ -26,5 +27,6 @@ export class LocationSettingTab extends PluginSettingTab {
 		markerSizeSetting(containerEl, this.plugin);
 		markerColorSetting(containerEl, this.plugin);
 		markerUrlSetting(containerEl, this.plugin);
+		mapZoomSetting(containerEl, this.plugin);
 	}
 }

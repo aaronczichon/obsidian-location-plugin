@@ -78,3 +78,30 @@ Following values for the code block are supported:
 **Hint**  
 Maki icon can only defined in the code block and can't be defined globally. If no custom marker or maki icon is defined, the map falls back to the default marker icon (a home icon).  
 If you have defined a custom icon URL (in plugin settings or in your code block) the defined maki icon is ignored.
+
+### Changing the zoom
+
+There are two options to change the zoom. You can either change the global setting in the plugin settings, which will then be applied to every map generated. Or, you can set a custom zoom for a specific map - this will override the global zoom.
+
+If you want a custom zoom for a specific map, you can add a `zoom` field to the code block. The value of the field should be a number between 1 (maximum zoomed out) and 20 (maximum zoomed in).
+
+Zoom value 1:
+```location
+latitude: 44.64266326577057
+longitude: -63.57530151565183
+zoom: 1
+```
+
+Zoom value 14 (default):
+```location
+latitude: 44.64266326577057
+longitude: -63.57530151565183
+zoom: 14
+```
+
+Zoom value 20 (default):
+```location
+latitude: 44.64266326577057
+longitude: -63.57530151565183
+zoom: 20
+```
