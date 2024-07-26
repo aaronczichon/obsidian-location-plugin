@@ -62,7 +62,7 @@ export default class MapboxPlugin extends Plugin {
 		codeMarker: string = "",
 		makiIcon: string = "",
 		style: string = "",
-		zoom: string,
+		zoom: string = "",
 	): string => {
 		const mapboxAccessToken = this.settings.mapboxToken;
 		if (!mapboxAccessToken) {
