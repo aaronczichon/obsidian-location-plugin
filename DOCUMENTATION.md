@@ -86,6 +86,7 @@ There are two options to change the zoom. You can either change the global setti
 If you want a custom zoom for a specific map, you can add a `zoom` field to the code block. The value of the field should be a number between 1 (maximum zoomed out) and 20 (maximum zoomed in).
 
 Zoom value 1:
+
 ```location
 latitude: 44.64266326577057
 longitude: -63.57530151565183
@@ -93,6 +94,7 @@ zoom: 1
 ```
 
 Zoom value 14 (default):
+
 ```location
 latitude: 44.64266326577057
 longitude: -63.57530151565183
@@ -100,6 +102,7 @@ zoom: 14
 ```
 
 Zoom value 20 (default):
+
 ```location
 latitude: 44.64266326577057
 longitude: -63.57530151565183
