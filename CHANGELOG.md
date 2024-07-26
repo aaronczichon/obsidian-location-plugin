@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+### Features
+
+-   [🚀] Adding support for custom zoom level (thanks to @nehnehneh)
+
 ## 1.1.1
 
 ### Improvements
