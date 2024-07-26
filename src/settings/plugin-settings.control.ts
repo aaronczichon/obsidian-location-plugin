@@ -7,7 +7,7 @@ export const apiTokenSetting = (
 ) => {
 	new Setting(containerEl)
 		.setName("Mapbox API token")
-		.setDesc("Please provide your mapbox API token")
+		.setDesc("Please provide your mapbox API token.")
 		.addText((text) =>
 			text
 				.setPlaceholder("pk.ey...")
@@ -26,7 +26,7 @@ export const markerUrlSetting = (
 	new Setting(containerEl)
 		.setName("Custom marker URL")
 		.setDesc(
-			"You can define a custom marker icon by providing a URL which will be used as default marker icon",
+			"You can define a custom marker icon by providing a URL which will be used as default marker icon.",
 		)
 		.setTooltip("Recommended size: 50x50px, PNG or JPG format.")
 		.addText((text) =>
@@ -93,7 +93,7 @@ export const markerColorSetting = (
 ) => {
 	new Setting(containerEl)
 		.setName("Marker color")
-		.setDesc("Color of the marker on the map")
+		.setDesc("Color of the marker on the map.")
 		.addColorPicker((text) =>
 			text
 				.setValue(`#${plugin.settings.markerColor}`)
@@ -110,7 +110,7 @@ export const mapZoomSetting = (
 ) => {
 	new Setting(containerEl)
 		.setName("Map zoom")
-		.setDesc("Set the default zoom for each map image.")
+		.setDesc("Set the default zoom for the map image.")
 		.addDropdown((text) =>
 			text
 				.addOption("20", "20 - closest")

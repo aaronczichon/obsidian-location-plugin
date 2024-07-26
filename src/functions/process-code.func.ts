@@ -14,7 +14,7 @@ export const processCodeBlock = (source: string) => {
 		markerUrl,
 		makiIcon,
 		mapStyle,
-		mapZoom
+		mapZoom,
 	};
 };
 
@@ -62,6 +62,6 @@ const findMapStyle = (rows: string[]) => {
 const findMapZoom = (rows: string[]) => {
 	let mapZoom = rows.find((l) => l.toLowerCase().startsWith("zoom:"));
 	if (mapZoom)
-	  mapZoom = mapZoom.toLocaleLowerCase().replace("zoom:", "").trim();
+		mapZoom = mapZoom.toLocaleLowerCase().replace("zoom:", "").trim();
 	return mapZoom;
-  };
+};
