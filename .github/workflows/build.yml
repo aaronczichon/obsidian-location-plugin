@@ -1,4 +1,4 @@
-name: Pull Request Build
+name: Build
 
 on:
     pull_request:
@@ -20,5 +20,5 @@ jobs:
                   node-version: 20
             - name: Install Dependencies
               run: npm install
-            - name: Build plugin
+            - name: Build Plugin
               run: npm run build
