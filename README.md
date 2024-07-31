@@ -28,9 +28,7 @@ The full documentation with all options to configure your map can be found in th
 
 ## Data Privacy
 
-This plugin uses mapbox for rendering the map image. You should be aware of the fact that it makes a call to the Mapbox API with the provided latitude and longitude. The plugin does not store any data or send it to any other server except the Mapbox API.
-
-For more data privacy information about Mapbox, please refer to the [Mapbox Privacy Policy](https://www.mapbox.com/privacy/).
+The data privacy information can be found inside the [PRIVACY.md](./PRIVACY.md) file.
 
 ## Changelog
 
