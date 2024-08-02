@@ -23,6 +23,7 @@ This is how it looks rendered:
 ```location
 search: 123 smith street fitzroy
 ```
+
 ![Screenshot of basic search result](./docs/basic-search.png)
 
 ## Configuration

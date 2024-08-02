@@ -71,6 +71,9 @@ const findMapZoom = (rows: string[]) => {
 const findSearchQuery = (rows: string[]) => {
 	let searchQuery = rows.find((l) => l.toLowerCase().startsWith("search:"));
 	if (searchQuery)
-		searchQuery = searchQuery.toLocaleLowerCase().replace("search:", "").trim();
+		searchQuery = searchQuery
+			.toLocaleLowerCase()
+			.replace("search:", "")
+			.trim();
 	return searchQuery;
 };

@@ -25,7 +25,7 @@ export default class MapboxPlugin extends Plugin {
 		await checkVersionUpdate(this);
 	}
 
-	public processLocationCodeBlock = (source: string, el: HTMLElement) => {		
+	public processLocationCodeBlock = (source: string, el: HTMLElement) => {
 		try {
 			const extractedData = processCodeBlock(source);
 			let mapboxAccessToken = this.settings.mapboxToken;
@@ -35,8 +35,11 @@ export default class MapboxPlugin extends Plugin {
 				);
 				return;
 			}
-			
-			if ((!extractedData.searchQuery) && (!extractedData.latitude || !extractedData.longitude)) {
+
+			if (
+				!extractedData.searchQuery &&
+				(!extractedData.latitude || !extractedData.longitude)
+			) {
 				this.showNotice(
 					"Error processing location code block. Either Longitude and Latitude are required together, or a search term.",
 				);
@@ -48,9 +51,9 @@ export default class MapboxPlugin extends Plugin {
 				const searchUrl = processLocationSearch(
 					extractedData.searchQuery,
 					mapboxAccessToken,
-				).then(properties => {
-					const longitude:string = properties.coordinates.longitude;
-					const latitude:string = properties.coordinates.latitude;
+				).then((properties) => {
+					const longitude: string = properties.coordinates.longitude;
+					const latitude: string = properties.coordinates.latitude;
 					const searchImageUrl = this.getStaticMapImageUrl(
 						latitude,
 						longitude,
@@ -70,9 +73,8 @@ export default class MapboxPlugin extends Plugin {
 					searchInfoElement.innerText = properties.full_address;
 					searchInfoElement.classList.add("mapbox-image-info");
 					el.appendChild(searchInfoElement);
-
 				});
-			// if not a search then use the long-lat coordinates input by user	
+				// if not a search then use the long-lat coordinates input by user
 			} else {
 				const imageUrl = this.getStaticMapImageUrl(
 					extractedData.latitude,
@@ -82,14 +84,13 @@ export default class MapboxPlugin extends Plugin {
 					extractedData.mapStyle,
 					extractedData.mapZoom,
 				);
-	
+
 				const imageElement = document.createElement("img");
 				imageElement.src = imageUrl;
 				imageElement.classList.add("mapbox-image");
-	
+
 				el.appendChild(imageElement);
 			}
-			
 		} catch (e) {
 			this.showNotice(
 				"Error processing location code block. Please check syntax or missing settings.",
