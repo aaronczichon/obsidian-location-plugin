@@ -32,8 +32,8 @@ Also it's not relevant if you write `Latitude` or `latitude` and `Longitude` or 
 
 If you provide a search phrase the plugin will fetch the most relevant result and generate the map image.
 
-\```location
-search: 123 smith street fitzroy
+\```location  
+search: 123 smith street fitzroy 
 \```
 
 ![Screenshot of basic search result](./docs/basic-search.png)
