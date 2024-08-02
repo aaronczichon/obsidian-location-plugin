@@ -1,4 +1,4 @@
-import { Notice, Plugin } from "obsidian";
+import { Notice, Plugin, requestUrl, SuggestModal } from "obsidian";
 import { processCodeBlock } from "./functions/process-code.func";
 import { checkVersionUpdate } from "./functions/version-hint.func";
 import { LocationSettingTab } from "./settings/plugin-settings.tab";
@@ -6,6 +6,7 @@ import {
 	DEFAULT_SETTINGS,
 	LocationPluginSettings,
 } from "./settings/plugin-settings.types";
+import { processLocationSearch } from "./functions/process-location-search.func";
 
 export default class MapboxPlugin extends Plugin {
 	settings: LocationPluginSettings;
@@ -24,31 +25,71 @@ export default class MapboxPlugin extends Plugin {
 		await checkVersionUpdate(this);
 	}
 
-	public processLocationCodeBlock = (source: string, el: HTMLElement) => {
+	public processLocationCodeBlock = (source: string, el: HTMLElement) => {		
 		try {
 			const extractedData = processCodeBlock(source);
-
-			if (!extractedData.latitude || !extractedData.longitude) {
+			let mapboxAccessToken = this.settings.mapboxToken;
+			if (!mapboxAccessToken) {
 				this.showNotice(
-					"Error processing location code block. Latitude and Longitude are required.",
+					"Mapbox access token is not set. Please set it in the plugin settings.",
+				);
+				return;
+			}
+			
+			if ((!extractedData.searchQuery) && (!extractedData.latitude || !extractedData.longitude)) {
+				this.showNotice(
+					"Error processing location code block. Either Longitude and Latitude are required together, or a search term.",
 				);
 				return;
 			}
 
-			const imageUrl = this.getStaticMapImageUrl(
-				extractedData.latitude,
-				extractedData.longitude,
-				extractedData.markerUrl,
-				extractedData.makiIcon,
-				extractedData.mapStyle,
-				extractedData.mapZoom,
-			);
+			// check if being run as a search then retrieve and render the image
+			if (extractedData.searchQuery) {
+				const searchUrl = processLocationSearch(
+					extractedData.searchQuery,
+					mapboxAccessToken,
+				).then(properties => {
+					const longitude:string = properties.coordinates.longitude;
+					const latitude:string = properties.coordinates.latitude;
+					const searchImageUrl = this.getStaticMapImageUrl(
+						latitude,
+						longitude,
+						extractedData.markerUrl,
+						extractedData.makiIcon,
+						extractedData.mapStyle,
+						extractedData.mapZoom,
+					);
+					const searchImageElement = document.createElement("img");
+					searchImageElement.src = searchImageUrl;
+					searchImageElement.classList.add("mapbox-image");
+					el.appendChild(searchImageElement);
 
-			const imageElement = document.createElement("img");
-			imageElement.src = imageUrl;
-			imageElement.classList.add("mapbox-image");
+					// render in the address of the location as text
+					// allows user to confirm the location is the intended one
+					const searchInfoElement = document.createElement("p");
+					searchInfoElement.innerText = properties.full_address;
+					searchInfoElement.classList.add("mapbox-image-info");
+					el.appendChild(searchInfoElement);
 
-			el.appendChild(imageElement);
+				});
+			// if not a search then use the long-lat coordinates input by user	
+			} else {
+				const imageUrl = this.getStaticMapImageUrl(
+					extractedData.latitude,
+					extractedData.longitude,
+					extractedData.markerUrl,
+					extractedData.makiIcon,
+					extractedData.mapStyle,
+					extractedData.mapZoom,
+				);
+	
+				const imageElement = document.createElement("img");
+				imageElement.src = imageUrl;
+				imageElement.classList.add("mapbox-image");
+	
+				el.appendChild(imageElement);
+			}
+			
 		} catch (e) {
 			this.showNotice(
 				"Error processing location code block. Please check syntax or missing settings.",
@@ -57,20 +98,15 @@ export default class MapboxPlugin extends Plugin {
 	};
 
 	public getStaticMapImageUrl = (
-		latitude: string,
-		longitude: string,
+		latitude: string = "",
+		longitude: string = "",
 		codeMarker: string = "",
 		makiIcon: string = "",
 		style: string = "",
 		zoom: string = "",
 	): string => {
 		const mapboxAccessToken = this.settings.mapboxToken;
-		if (!mapboxAccessToken) {
-			this.showNotice(
-				"Mapbox access token is not set. Please set it in the plugin settings.",
-			);
-			return "";
-		}
+
 		const markerUrl = this.getMarkerUrl(codeMarker, makiIcon);
 
 		if (markerUrl && makiIcon) {
