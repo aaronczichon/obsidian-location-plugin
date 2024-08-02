@@ -20,9 +20,9 @@ This is how it looks rendered:
 
 ## Example Usage - using search term
 
-```location
+\```location
 search: 123 smith street fitzroy
-```
+\```
 
 ![Screenshot of basic search result](./docs/basic-search.png)
 

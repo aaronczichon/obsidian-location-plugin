@@ -32,26 +32,28 @@ Also it's not relevant if you write `Latitude` or `latitude` and `Longitude` or 
 
 If you provide a search phrase the plugin will fetch the most relevant result and generate the map image.
 
-```location
+\```location
 search: 123 smith street fitzroy
-```
+\```
 
 ![Screenshot of basic search result](./docs/basic-search.png)
 
-Search phrases can be: 
+Search phrases can be:
 
-* Addresses, e.g.:
-    * 123 Smith Street Fitzroy 
+-   Addresses, e.g.:
 
-* Locations or place names, e.g.:
-    * Barcelona 
-    * Brooklyn New York
-    * Bondi Beach Sydney
-    
-* Landmarks or points of interest, e.g.:
-    * The Dolomites Italy
-    * Parliament house canberra
-    * Melbourne Cricket Ground
+    -   123 Smith Street Fitzroy
+
+-   Locations or place names, e.g.:
+
+    -   Barcelona
+    -   Brooklyn New York
+    -   Bondi Beach Sydney
+
+-   Landmarks or points of interest, e.g.:
+    -   The Dolomites Italy
+    -   Parliament house canberra
+    -   Melbourne Cricket Ground
 
 The search is reasonably intelligent and you do not need to be exact in syntax, or provide full addresses etc. When returning a result the plugin will provide the full address as a caption to the image (as it shows in Mapbox data).
 
