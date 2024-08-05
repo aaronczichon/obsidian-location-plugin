@@ -5,6 +5,7 @@ export interface LocationPluginSettings {
 	markerUrl: string;
 	mapStyle: string;
 	mapZoom: string;
+	reverseOrder: boolean;
 }
 
 export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
@@ -14,4 +15,5 @@ export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
 	markerUrl: "",
 	mapStyle: "streets-v12",
 	mapZoom: "15",
+	reverseOrder: false,
 };

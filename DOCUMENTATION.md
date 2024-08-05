@@ -28,6 +28,13 @@ Longitude: -63.57530151565183
 It doesn't matter if you provide the latitude or longitude first. The plugin will recognize the values and generate the map image.  
 Also it's not relevant if you write `Latitude` or `latitude` and `Longitude` or `longitude`.
 
+You can also provide the coordinates in one line using the array syntax like this:
+\```location  
+[44.64266326577057, -63.57530151565183]  
+\```
+
+-> Make sure that this syntax uses [latitude, longitude] order.
+
 #### Using search phrase
 
 If you provide a search phrase the plugin will fetch the most relevant result and generate the map image.
@@ -135,6 +142,11 @@ latitude: 44.64266326577057
 longitude: -63.57530151565183
 zoom: 1
 ```
+
+### Reverse order of coordinates
+
+The default order of coordinates is `latitude, longitude`. If you have copied coordinates from Google Maps or another source where the order is `longitude, latitude`, you can set the plugin to use the reverse order.  
+This can be done using the toggle in the plugin settings.
 
 ![Screenshot map with zoom setting 1](./docs/zoom-setting-1.png)
 

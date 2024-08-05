@@ -1,4 +1,4 @@
-import { Setting } from "obsidian";
+import { Notice, Setting } from "obsidian";
 import MapboxPlugin from "../main";
 
 export const apiTokenSetting = (
@@ -122,6 +122,28 @@ export const mapZoomSetting = (
 				.onChange(async (value) => {
 					plugin.settings.mapZoom = value;
 					await plugin.saveSettings();
+				}),
+		);
+};
+
+export const coordinatesReverseOrder = (
+	containerEl: HTMLElement,
+	plugin: MapboxPlugin,
+) => {
+	new Setting(containerEl)
+		.setName("Reverse order")
+		.setDesc(
+			"If you copy coordinates in a different order (e.g. from Google Maps) you can automatically reverse them.",
+		)
+		.addToggle((reverse) =>
+			reverse
+				.setValue(plugin.settings.reverseOrder)
+				.onChange(async (value) => {
+					plugin.settings.reverseOrder = value;
+					await plugin.saveSettings();
+					new Notice(
+						"Coordinates order reversed. This affects all your location code blocks.",
+					);
 				}),
 		);
 };

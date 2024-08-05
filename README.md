@@ -15,6 +15,11 @@ Latitude: 44.64266326577057
 Longitude: -63.57530151565183  
 \```
 
+Or
+\```location  
+[44.64266326577057, -63.57530151565183]  
+\```
+
 This is how it looks rendered:
 ![Screenshot of obsidian with rendered location image](/docs/rendered.png)
 
