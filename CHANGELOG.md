@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1]
 
-### Changed
+### Fixed
 
 -   [💎] Renaming `Custom Marker Icon URL` to `Custom marker URL` to follow Obsidian guidelines
 -   [💎] Showing a toast notice if the user uses an invalid combination of maki icon and custom marker url
