@@ -6,9 +6,9 @@
 
 Welcome to the Obsidian Location Plugin! This plugin allows you to generate location images for your Obsidian notes. You can create a map image of a specific location.
 
-You can simply use the code block with `location` as the language identifier. If you provide then longitude and latitude, the plugin will generate a map image for that location.
+You can simply use the code block with `location` as the language identifier. If you provide then longitude and latitude, the plugin will generate a map image for that location. If you provide a search term the plugin will fetch the most relevant result and generate a map image for that location.
 
-## Example Usage
+## Example Usage - using coordinates
 
 \```location  
 Latitude: 44.64266326577057  
@@ -17,6 +17,14 @@ Longitude: -63.57530151565183
 
 This is how it looks rendered:
 ![Screenshot of obsidian with rendered location image](/docs/rendered.png)
+
+## Example Usage - using search term
+
+\```location  
+search: 123 smith street fitzroy  
+\```
+
+![Screenshot of basic search result](./docs/basic-search.png)
 
 ## Configuration
 

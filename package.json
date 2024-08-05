@@ -30,6 +30,7 @@
 		"typescript": "4.7.4"
 	},
 	"dependencies": {
+		"@obsidianjs/http-request": "^0.1.4",
 		"mapbox-gl": "^2.15.0"
 	}
 }

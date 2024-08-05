@@ -14,7 +14,11 @@ To add the API key to your Obsidian settings, go to "Settings" -> "Mapbox Locati
 
 ### Basic Usage
 
-You can simply use the code block with `location` as the language identifier. If you provide then longitude and latitude, the plugin will generate a map image for that location.
+You can simply use the code block with `location` as the language identifier.
+
+#### Using coordinates
+
+If you provide the longitude and latitude, the plugin will generate a map image for that location.
 
 \```location  
 Latitude: 44.64266326577057  
@@ -23,6 +27,45 @@ Longitude: -63.57530151565183
 
 It doesn't matter if you provide the latitude or longitude first. The plugin will recognize the values and generate the map image.  
 Also it's not relevant if you write `Latitude` or `latitude` and `Longitude` or `longitude`.
+
+#### Using search phrase
+
+If you provide a search phrase the plugin will fetch the most relevant result and generate the map image.
+
+\```location  
+search: 123 smith street fitzroy 
+\```
+
+![Screenshot of basic search result](./docs/basic-search.png)
+
+Search phrases can be:
+
+-   Addresses, e.g.:
+
+    -   123 Smith Street Fitzroy
+
+-   Locations or place names, e.g.:
+
+    -   Barcelona
+    -   Brooklyn New York
+    -   Bondi Beach Sydney
+
+-   Landmarks or points of interest, e.g.:
+    -   The Dolomites Italy
+    -   Parliament house canberra
+    -   Melbourne Cricket Ground
+
+The search is reasonably intelligent and you do not need to be exact in syntax, or provide full addresses etc. When returning a result the plugin will provide the full address as a caption to the image (as it shows in Mapbox data).
+
+Search mode still works with all other custom settings such as marker icon, style and zoom settings - they can be set in the settings menu or in-line per image:
+
+```location
+search: parliament house canberra
+style: satellite-streets-v12
+zoom: 10
+```
+
+![Screenshot of search result with custom options in-line](./docs/search-with-options.jpeg)
 
 ### Changing the icon
 
@@ -75,7 +118,7 @@ Following values for the code block are supported:
 -   navigation-day-v1
 -   navigation-night-v1
 
-**Hint**  
+**Hint**
 Maki icon can only defined in the code block and can't be defined globally. If no custom marker or maki icon is defined, the map falls back to the default marker icon (a home icon).  
 If you have defined a custom icon URL (in plugin settings or in your code block) the defined maki icon is ignored.
 
@@ -93,6 +136,8 @@ longitude: -63.57530151565183
 zoom: 1
 ```
 
+![Screenshot map with zoom setting 1](./docs/zoom-setting-1.png)
+
 Zoom value 14 (default):
 
 ```location
@@ -101,10 +146,14 @@ longitude: -63.57530151565183
 zoom: 14
 ```
 
-Zoom value 20 (default):
+![Screenshot map with zoom setting 14](./docs/zoom-setting-14.png)
+
+Zoom value 20:
 
 ```location
 latitude: 44.64266326577057
 longitude: -63.57530151565183
 zoom: 20
 ```
+
+![Screenshot map with zoom setting 20](./docs/zoom-setting-20.png)
