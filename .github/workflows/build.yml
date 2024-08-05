@@ -22,3 +22,18 @@ jobs:
               run: npm install
             - name: Build Plugin
               run: npm run build
+    run-validations:
+        name: Validate Code
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - name: Install Dependencies
+              run: npm install
+            - name: Validate Commits
+              run: npm run check:commits
+            - name: Validate Code Format
+              run: npm run check

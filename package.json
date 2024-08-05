@@ -9,7 +9,8 @@
 		"version": "node version-bump.mjs && git add manifest.json versions.json package.json",
 		"prepare": "husky",
 		"prettier": "prettier --write .",
-		"check": "prettier --check ."
+		"check": "prettier --check .",
+		"check:commit": "commitlint --edit"
 	},
 	"keywords": [],
 	"author": "Aaron Czichon <obsidian@aaronczichon.de>",
