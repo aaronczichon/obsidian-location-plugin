@@ -1,12 +1,13 @@
-import { Notice, Plugin, requestUrl, SuggestModal } from "obsidian";
+import { Notice, Plugin } from "obsidian";
+import { getStaticMapImageUrl } from "./functions/map.func";
 import { processCodeBlock } from "./functions/process-code.func";
+import { processLocationSearch } from "./functions/process-location-search.func";
 import { checkVersionUpdate } from "./functions/version-hint.func";
 import { LocationSettingTab } from "./settings/plugin-settings.tab";
 import {
 	DEFAULT_SETTINGS,
 	LocationPluginSettings,
 } from "./settings/plugin-settings.types";
-import { processLocationSearch } from "./functions/process-location-search.func";
 
 export default class MapboxPlugin extends Plugin {
 	settings: LocationPluginSettings;
@@ -25,7 +26,10 @@ export default class MapboxPlugin extends Plugin {
 		await checkVersionUpdate(this);
 	}
 
-	public processLocationCodeBlock = (source: string, el: HTMLElement) => {
+	public processLocationCodeBlock = async (
+		source: string,
+		el: HTMLElement,
+	) => {
 		try {
 			const extractedData = processCodeBlock(source);
 			let mapboxAccessToken = this.settings.mapboxToken;
@@ -47,50 +51,36 @@ export default class MapboxPlugin extends Plugin {
 			}
 
 			// check if being run as a search then retrieve and render the image
+			let lat = extractedData.latitude;
+			let long = extractedData.longitude;
+			let address = "";
 			if (extractedData.searchQuery) {
-				const searchUrl = processLocationSearch(
-					extractedData.searchQuery,
-					mapboxAccessToken,
-				).then((properties) => {
-					const longitude: string = properties.coordinates.longitude;
-					const latitude: string = properties.coordinates.latitude;
-					const searchImageUrl = this.getStaticMapImageUrl(
-						latitude,
-						longitude,
-						extractedData.markerUrl,
-						extractedData.makiIcon,
-						extractedData.mapStyle,
-						extractedData.mapZoom,
+				const [latitude, longitude, fullAddress] =
+					await processLocationSearch(
+						extractedData.searchQuery,
+						mapboxAccessToken,
 					);
-					const searchImageElement = document.createElement("img");
-					searchImageElement.src = searchImageUrl;
-					searchImageElement.classList.add("mapbox-image");
-					el.appendChild(searchImageElement);
-
-					// render in the address of the location as text
-					// allows user to confirm the location is the intended one
-					const searchInfoElement = document.createElement("p");
-					searchInfoElement.innerText = properties.full_address;
-					searchInfoElement.classList.add("mapbox-image-info");
-					el.appendChild(searchInfoElement);
-				});
-				// if not a search then use the long-lat coordinates input by user
-			} else {
-				const imageUrl = this.getStaticMapImageUrl(
-					extractedData.latitude,
-					extractedData.longitude,
-					extractedData.markerUrl,
-					extractedData.makiIcon,
-					extractedData.mapStyle,
-					extractedData.mapZoom,
-				);
-
-				const imageElement = document.createElement("img");
-				imageElement.src = imageUrl;
-				imageElement.classList.add("mapbox-image");
-
-				el.appendChild(imageElement);
+				lat = latitude.toString();
+				long = longitude.toString();
+				address = fullAddress;
 			}
+			this.addStaticImageToContainer(
+				this.settings,
+				extractedData,
+				el,
+				lat,
+				long,
+			);
+			if (!extractedData.searchQuery) return;
+
+			// if a search query was used, render the address as text
+			// render in the address of the location as text
+			// allows user to confirm the location is the intended one
+			const searchInfoElement = document.createElement("p");
+			searchInfoElement.innerText = address;
+			searchInfoElement.classList.add("mapbox-image-info");
+			el.appendChild(searchInfoElement);
+			// if not a search then use the long-lat coordinates input by user
 		} catch (e) {
 			this.showNotice(
 				"Error processing location code block. Please check syntax or missing settings.",
@@ -98,31 +88,32 @@ export default class MapboxPlugin extends Plugin {
 		}
 	};
 
-	public getStaticMapImageUrl = (
-		latitude: string = "",
-		longitude: string = "",
-		codeMarker: string = "",
-		makiIcon: string = "",
-		style: string = "",
-		zoom: string = "",
-	): string => {
-		const mapboxAccessToken = this.settings.mapboxToken;
-
-		const markerUrl = this.getMarkerUrl(codeMarker, makiIcon);
-
-		if (markerUrl && makiIcon) {
-			this.showNotice(
-				"Both marker URL and Maki icon are set. Setting both is not a valid combination.",
+	private addStaticImageToContainer = (
+		settings: LocationPluginSettings,
+		extractedData: any,
+		el: HTMLElement,
+		latitude?: string,
+		longitude?: string,
+	) => {
+		try {
+			const imageUrl = getStaticMapImageUrl(
+				settings,
+				latitude,
+				longitude,
+				extractedData.markerUrl,
+				extractedData.makiIcon,
+				extractedData.mapStyle,
+				extractedData.mapZoom,
 			);
+
+			const imageElement = document.createElement("img");
+			imageElement.src = imageUrl;
+			imageElement.classList.add("mapbox-image");
+
+			el.appendChild(imageElement);
+		} catch (e) {
+			this.showNotice(e);
 		}
-
-		const mapStyle = style || this.settings.mapStyle;
-
-		const mapZoom = zoom || this.settings.mapZoom;
-
-		const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},${mapZoom}/800x400?access_token=${mapboxAccessToken}`;
-
-		return imageUrl;
 	};
 
 	public loadSettings = async () => {
@@ -139,16 +130,5 @@ export default class MapboxPlugin extends Plugin {
 
 	private showNotice = (message: string) => {
 		new Notice(message, 5000);
-	};
-
-	private getMarkerUrl = (codeMarker: string, makiIcon: string) => {
-		// If a marker URL is set in code block use it
-		if (codeMarker) return `url-${encodeURIComponent(codeMarker)}`;
-		// If a marker URL is set in settings use it
-		if (this.settings.markerUrl)
-			return `url-${encodeURIComponent(this.settings.markerUrl)}`;
-
-		// if no marker URL is set at all, use the default
-		return `pin-${this.settings.markerSize}-${makiIcon || "home"}+${this.settings.markerColor}`;
 	};
 }

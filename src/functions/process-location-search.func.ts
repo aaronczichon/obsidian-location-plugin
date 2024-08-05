@@ -1,15 +1,16 @@
-import { requestUrl, SuggestModal } from "obsidian";
-import { LocationSettingTab } from "../settings/plugin-settings.tab";
-import { setMaxIdleHTTPParsers } from "http";
+import { requestUrl } from "obsidian";
 
-export async function processLocationSearch(
+export const processLocationSearch = async (
 	query: string = "",
 	accessToken: string,
-) {
+) => {
 	const mapbox_id: string = await hitSuggestAPI(query, accessToken);
 	const result: any = await hitRetrieveAPI(mapbox_id, accessToken);
-	return result.json.features[0].properties;
-}
+	const properties = result.json.features[0].properties;
+	const latitude = properties.coordinates.latitude;
+	const longitude = properties.coordinates.longitude;
+	return [latitude, longitude, properties.full_address];
+};
 
 // query the /suggest search API endpoint and retrieve the first result from the suggested locations
 // returns the mapbox_id

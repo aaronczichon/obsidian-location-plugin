@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   [⚙️] ci: added step to check commit messages on build workflow
 
+### Fixed
+
+-   [🐛] Fixed issue with custom marker icon not being displayed correctly
+
 ## [1.2.0] - 2024-07-26
 
 ### Added
