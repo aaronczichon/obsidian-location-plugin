@@ -10,7 +10,7 @@
 		"prepare": "husky",
 		"prettier": "prettier --write .",
 		"check": "prettier --check .",
-		"check:commit": "commitlint --edit"
+		"check:commits": "commitlint --edit"
 	},
 	"keywords": [],
 	"author": "Aaron Czichon <obsidian@aaronczichon.de>",
