@@ -15,13 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   [⚙️] ci: added step to check commit messages on build workflow
 
-## [1.2.0]
+## [1.2.0] - 2024-07-26
 
 ### Added
 
 -   [🚀] Adding support for custom zoom level (thanks to @nehnehneh)
 
-## [1.1.1]
+## [1.1.1] - 2024-06-11
 
 ### Fixed
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   [💎] Showing a toast notice if the user uses an invalid combination of maki icon and custom marker url
 -   [💎] Showing a notice if the plugin has updated so that the user may check for new features
 
-## [1.1.0]
+## [1.1.0] - 2024-05-14
 
 ### Added
 
