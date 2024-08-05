@@ -143,6 +143,11 @@ longitude: -63.57530151565183
 zoom: 1
 ```
 
+### Reverse order of coordinates
+
+The default order of coordinates is `latitude, longitude`. If you have copied coordinates from Google Maps or another source where the order is `longitude, latitude`, you can set the plugin to use the reverse order.   
+This can be done using the toggle in the plugin settings.
+
 ![Screenshot map with zoom setting 1](./docs/zoom-setting-1.png)
 
 Zoom value 14 (default):

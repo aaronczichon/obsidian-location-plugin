@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   [🚀] Added option to search for a location inside location block (@nehnehneh)
 -   [🚀] Supporting alternate syntax using [latitude, longitude] array (#18)
+-   [🚀] Allow reverse order of coordinates (e.g. if copied from Google Maps) via setting (#21)
 
 ### Changed
 

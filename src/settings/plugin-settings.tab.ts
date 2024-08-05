@@ -2,11 +2,12 @@ import { App, PluginSettingTab } from "obsidian";
 import MapboxPlugin from "../main";
 import {
 	apiTokenSetting,
+	coordinatesReverseOrder,
 	mapStyleSetting,
+	mapZoomSetting,
 	markerColorSetting,
 	markerSizeSetting,
 	markerUrlSetting,
-	mapZoomSetting,
 } from "./plugin-settings.control";
 
 export class LocationSettingTab extends PluginSettingTab {
@@ -28,5 +29,6 @@ export class LocationSettingTab extends PluginSettingTab {
 		markerColorSetting(containerEl, this.plugin);
 		markerUrlSetting(containerEl, this.plugin);
 		mapZoomSetting(containerEl, this.plugin);
+		coordinatesReverseOrder(containerEl, this.plugin);
 	}
 }

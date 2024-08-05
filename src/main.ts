@@ -64,6 +64,13 @@ export default class MapboxPlugin extends Plugin {
 				long = longitude.toString();
 				address = fullAddress;
 			}
+			// if we need to flip the order of the coordinates
+			// then we need to do it before rendering the image
+			if (this.settings.reverseOrder) {
+				const temp = lat;
+				lat = long;
+				long = temp;
+			}
 			this.addStaticImageToContainer(
 				this.settings,
 				extractedData,
