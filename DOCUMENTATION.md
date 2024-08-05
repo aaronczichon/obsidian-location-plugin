@@ -28,6 +28,13 @@ Longitude: -63.57530151565183
 It doesn't matter if you provide the latitude or longitude first. The plugin will recognize the values and generate the map image.  
 Also it's not relevant if you write `Latitude` or `latitude` and `Longitude` or `longitude`.
 
+You can also provide the coordinates in one line using the array syntax like this:
+\```location  
+[44.64266326577057, -63.57530151565183]  
+\```
+
+-> Make sure that this syntax uses [latitude, longitude] order.
+
 #### Using search phrase
 
 If you provide a search phrase the plugin will fetch the most relevant result and generate the map image.

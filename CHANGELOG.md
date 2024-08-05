@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 -   [🚀] Added option to search for a location inside location block (@nehnehneh)
+-   [🚀] Supporting alternate syntax using [latitude, longitude] array (#18)
 
 ### Changed
 

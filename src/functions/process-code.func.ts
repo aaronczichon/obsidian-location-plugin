@@ -1,13 +1,16 @@
 export const processCodeBlock = (source: string) => {
 	const rows = source.split("\n");
 
-	const latitude = findLatitude(rows);
-	const longitude = findLongitude(rows);
+	let latitude = findLatitude(rows);
+	let longitude = findLongitude(rows);
 	const markerUrl = findMarkerUrl(rows);
 	const makiIcon = findMarkerIcon(rows);
 	const mapStyle = findMapStyle(rows);
 	const mapZoom = findMapZoom(rows);
 	const searchQuery = findSearchQuery(rows);
+	const latLong = findLatitudeAndLongitude(rows);
+	latitude = latLong ? latLong[0] : latitude;
+	longitude = latLong ? latLong[1] : longitude;
 
 	return {
 		latitude,
@@ -18,6 +21,17 @@ export const processCodeBlock = (source: string) => {
 		mapZoom,
 		searchQuery,
 	};
+};
+
+const findLatitudeAndLongitude = (rows: string[]) => {
+	const regex = /^\[\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\s*\]$/;
+	let latLong = rows.find((l) => regex.test(l.toLowerCase()));
+	if (latLong) {
+		const match = latLong.match(regex);
+		if (match) {
+			return [match[1], match[3]];
+		}
+	}
 };
 
 const findLatitude = (rows: string[]) => {
