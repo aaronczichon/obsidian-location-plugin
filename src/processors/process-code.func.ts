@@ -1,7 +1,10 @@
 import { Notice } from 'obsidian';
-import { getStaticMapImageUrl } from '../functions/map.func';
+import { getStaticMapImageUrl, hasMapboxToken } from '../functions/map.func';
 import { processLocationSearch } from '../functions/process-location-search.func';
-import { LocationPluginSettings } from '../settings/plugin-settings.types';
+import {
+	LocationBlockConfiguration,
+	LocationPluginSettings,
+} from '../settings/plugin-settings.types';
 
 export const processLocationCodeBlock = async (
 	source: string,
@@ -10,11 +13,9 @@ export const processLocationCodeBlock = async (
 ) => {
 	try {
 		const extractedData = processCodeBlock(source);
-		let mapboxAccessToken = settings.mapboxToken;
-		if (!mapboxAccessToken) {
-			new Notice('Mapbox access token is not set. Please set it in the plugin settings.', 5000);
-			return;
-		}
+
+		// If no Mapbox token is set, we don't need to process the code block.
+		if (!hasMapboxToken(settings)) return;
 
 		if (!extractedData.searchQuery && (!extractedData.latitude || !extractedData.longitude)) {
 			new Notice(
@@ -25,26 +26,24 @@ export const processLocationCodeBlock = async (
 		}
 
 		// check if being run as a search then retrieve and render the image
-		let lat = extractedData.latitude;
-		let long = extractedData.longitude;
 		let address = '';
 		if (extractedData.searchQuery) {
 			const [latitude, longitude, fullAddress] = await processLocationSearch(
 				extractedData.searchQuery,
-				mapboxAccessToken,
+				settings.mapboxToken,
 			);
-			lat = latitude.toString();
-			long = longitude.toString();
+			extractedData.latitude = latitude.toString();
+			extractedData.longitude = longitude.toString();
 			address = fullAddress;
 		}
 		// if we need to flip the order of the coordinates
 		// then we need to do it before rendering the image
 		if (settings.reverseOrder) {
-			const temp = lat;
-			lat = long;
-			long = temp;
+			const temp = extractedData.latitude;
+			extractedData.latitude = extractedData.longitude;
+			extractedData.longitude = temp;
 		}
-		addStaticImageToContainer(settings, extractedData, el, lat, long);
+		addStaticImageToContainer(settings, extractedData, el);
 		if (!extractedData.searchQuery) return;
 
 		// if a search query was used, render the address as text
@@ -77,34 +76,25 @@ export const processCodeBlock = (source: string) => {
 	latitude = latLong ? latLong[0] : latitude;
 	longitude = latLong ? latLong[1] : longitude;
 
-	return {
+	const config: LocationBlockConfiguration = {
 		latitude,
 		longitude,
 		markerUrl,
-		makiIcon,
-		mapStyle,
-		mapZoom,
+		style: mapStyle,
+		zoom: mapZoom,
 		searchQuery,
+		makiIcon,
 	};
+	return config;
 };
 
 const addStaticImageToContainer = (
 	settings: LocationPluginSettings,
-	extractedData: any,
+	extractedData: LocationBlockConfiguration,
 	el: HTMLElement,
-	latitude?: string,
-	longitude?: string,
 ) => {
 	try {
-		const imageUrl = getStaticMapImageUrl(
-			settings,
-			latitude,
-			longitude,
-			extractedData.markerUrl,
-			extractedData.makiIcon,
-			extractedData.mapStyle,
-			extractedData.mapZoom,
-		);
+		const imageUrl = getStaticMapImageUrl(settings, extractedData);
 
 		const imageElement = document.createElement('img');
 		imageElement.src = imageUrl;

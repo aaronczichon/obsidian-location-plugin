@@ -17,3 +17,13 @@ export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
 	mapZoom: '15',
 	reverseOrder: false,
 };
+
+export type LocationBlockConfiguration = {
+	latitude?: string;
+	longitude?: string;
+	searchQuery?: string;
+	makiIcon?: string;
+	markerUrl?: string;
+	style?: string;
+	zoom?: string;
+};
