@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [⚙️] Code structure to support new processor blocks
 - [⚙️] Added `.prettierrc` config to force correct formatting (e.g. single quotes)
+- [⚙️] Adde better typings for some functions
 
 ## [1.3.0] - 2024-08-06
 
