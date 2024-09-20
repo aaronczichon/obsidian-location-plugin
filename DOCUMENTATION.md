@@ -47,20 +47,20 @@ search: 123 smith street fitzroy
 
 Search phrases can be:
 
--   Addresses, e.g.:
+- Addresses, e.g.:
 
-    -   123 Smith Street Fitzroy
+  - 123 Smith Street Fitzroy
 
--   Locations or place names, e.g.:
+- Locations or place names, e.g.:
 
-    -   Barcelona
-    -   Brooklyn New York
-    -   Bondi Beach Sydney
+  - Barcelona
+  - Brooklyn New York
+  - Bondi Beach Sydney
 
--   Landmarks or points of interest, e.g.:
-    -   The Dolomites Italy
-    -   Parliament house canberra
-    -   Melbourne Cricket Ground
+- Landmarks or points of interest, e.g.:
+  - The Dolomites Italy
+  - Parliament house canberra
+  - Melbourne Cricket Ground
 
 The search is reasonably intelligent and you do not need to be exact in syntax, or provide full addresses etc. When returning a result the plugin will provide the full address as a caption to the image (as it shows in Mapbox data).
 
@@ -116,14 +116,14 @@ The result looks like this:
 
 Following values for the code block are supported:
 
--   streets-v12
--   outdoors-v12
--   light-v11
--   dark-v11
--   satellite-v9
--   satellite-streets-v12
--   navigation-day-v1
--   navigation-night-v1
+- streets-v12
+- outdoors-v12
+- light-v11
+- dark-v11
+- satellite-v9
+- satellite-streets-v12
+- navigation-day-v1
+- navigation-night-v1
 
 **Hint**
 Maki icon can only defined in the code block and can't be defined globally. If no custom marker or maki icon is defined, the map falls back to the default marker icon (a home icon).  

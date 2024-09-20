@@ -1,4 +1,4 @@
-import { Notice, Plugin } from "obsidian";
+import { Notice, Plugin } from 'obsidian';
 
 export const checkVersionUpdate = async (plugin: Plugin) => {
 	const data = await plugin.loadData();

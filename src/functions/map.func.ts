@@ -1,18 +1,21 @@
-import { LocationPluginSettings } from "../settings/plugin-settings.types";
+import { Notice } from 'obsidian';
+import {
+	LocationBlockConfiguration,
+	LocationPluginSettings,
+} from '../settings/plugin-settings.types';
 
 export const getMarkerUrl = (
-	codeMarker: string,
-	makiIcon: string,
 	settings: LocationPluginSettings,
+	codeMarker?: string,
+	makiIcon?: string,
 ) => {
 	// If a marker URL is set in code block use it
 	if (codeMarker) return `url-${encodeURIComponent(codeMarker)}`;
 	// If a marker URL is set in settings use it
-	if (settings.markerUrl)
-		return `url-${encodeURIComponent(settings.markerUrl)}`;
+	if (settings.markerUrl) return `url-${encodeURIComponent(settings.markerUrl)}`;
 
 	// if no marker URL is set at all, use the default
-	return `pin-${settings.markerSize}-${makiIcon || "home"}+${settings.markerColor}`;
+	return `pin-${settings.markerSize}-${makiIcon || 'home'}+${settings.markerColor}`;
 };
 
 /**
@@ -28,24 +31,30 @@ export const getMarkerUrl = (
  */
 export const getStaticMapImageUrl = (
 	settings: LocationPluginSettings,
-	latitude: string = "",
-	longitude: string = "",
-	codeMarker: string = "",
-	makiIcon: string = "",
-	style: string = "",
-	zoom: string = "",
+	config: LocationBlockConfiguration,
 ): string => {
-	const markerUrl = getMarkerUrl(codeMarker, makiIcon, settings);
+	const markerUrl = getMarkerUrl(settings, config.markerUrl, config.makiIcon);
 
-	if (codeMarker && makiIcon) {
-		throw "Both marker URL and Maki icon are set. Setting both is not a valid combination.";
+	if (config.markerUrl && config.makiIcon) {
+		throw 'Both marker URL and Maki icon are set. Setting both is not a valid combination.';
 	}
 
-	const mapStyle = style || settings.mapStyle;
-
-	const mapZoom = zoom || settings.mapZoom;
-
-	const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},${mapZoom}/800x400?access_token=${settings.mapboxToken}`;
+	const mapStyle = config.style || settings.mapStyle;
+	const mapZoom = config.zoom || settings.mapZoom;
+	const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${config.longitude},${config.latitude})/${config.longitude},${config.latitude},${mapZoom}/800x400?access_token=${settings.mapboxToken}`;
 
 	return imageUrl;
+};
+
+/**
+ * Checks if mapbox token is available and shows a notice if not.
+ * @param settings object of location plugin settings
+ * @returns true if a valid mapbox token is configured, false otherwise
+ */
+export const hasMapboxToken = (settings: LocationPluginSettings) => {
+	if (!settings.mapboxToken) {
+		new Notice('Mapbox access token is not set. Please set it in the plugin settings.', 5000);
+		return false;
+	}
+	return true;
 };
