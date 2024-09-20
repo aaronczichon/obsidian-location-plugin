@@ -1,4 +1,4 @@
-import { LocationPluginSettings } from "../settings/plugin-settings.types";
+import { LocationPluginSettings } from '../settings/plugin-settings.types';
 
 export const getMarkerUrl = (
 	codeMarker: string,
@@ -8,11 +8,10 @@ export const getMarkerUrl = (
 	// If a marker URL is set in code block use it
 	if (codeMarker) return `url-${encodeURIComponent(codeMarker)}`;
 	// If a marker URL is set in settings use it
-	if (settings.markerUrl)
-		return `url-${encodeURIComponent(settings.markerUrl)}`;
+	if (settings.markerUrl) return `url-${encodeURIComponent(settings.markerUrl)}`;
 
 	// if no marker URL is set at all, use the default
-	return `pin-${settings.markerSize}-${makiIcon || "home"}+${settings.markerColor}`;
+	return `pin-${settings.markerSize}-${makiIcon || 'home'}+${settings.markerColor}`;
 };
 
 /**
@@ -28,17 +27,17 @@ export const getMarkerUrl = (
  */
 export const getStaticMapImageUrl = (
 	settings: LocationPluginSettings,
-	latitude: string = "",
-	longitude: string = "",
-	codeMarker: string = "",
-	makiIcon: string = "",
-	style: string = "",
-	zoom: string = "",
+	latitude: string = '',
+	longitude: string = '',
+	codeMarker: string = '',
+	makiIcon: string = '',
+	style: string = '',
+	zoom: string = '',
 ): string => {
 	const markerUrl = getMarkerUrl(codeMarker, makiIcon, settings);
 
 	if (codeMarker && makiIcon) {
-		throw "Both marker URL and Maki icon are set. Setting both is not a valid combination.";
+		throw 'Both marker URL and Maki icon are set. Setting both is not a valid combination.';
 	}
 
 	const mapStyle = style || settings.mapStyle;

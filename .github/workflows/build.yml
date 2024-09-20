@@ -1,44 +1,44 @@
 name: Build
 
 on:
-    pull_request:
-        branches:
-            - main
-    push:
-        branches:
-            - main
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build-library:
-        name: Build Plugin
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup Node
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: Install dependencies
-              run: npm install
-            - name: Build plugin
-              run: npm run build
-    run-validations:
-        name: Validate Code
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup Node
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: Install dependencies
-              run: npm install
-            - name: Validate code format
-              run: npm run check
-            - name: Validate changelog
-              uses: mindsers/changelog-reader-action@v2.2.0
-              with:
-                  # Path to the CHANGELOG file containing the log entries
-                  path: ./CHANGELOG.md
-                  # Specifies if the CHANGELOG.md file should be validated and the behavior of the action
-                  validation_level: error
+  build-library:
+    name: Build Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Build plugin
+        run: npm run build
+  run-validations:
+    name: Validate Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Validate code format
+        run: npm run check
+      - name: Validate changelog
+        uses: mindsers/changelog-reader-action@v2.2.0
+        with:
+          # Path to the CHANGELOG file containing the log entries
+          path: ./CHANGELOG.md
+          # Specifies if the CHANGELOG.md file should be validated and the behavior of the action
+          validation_level: error

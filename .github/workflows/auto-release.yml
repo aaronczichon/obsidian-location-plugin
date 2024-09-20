@@ -1,81 +1,81 @@
 name: Release Plugin
 
 on:
-    push:
-        tags:
-            - "*"
+  push:
+    tags:
+      - '*'
 jobs:
-    define-variables:
-        name: Defining and extracting Variables
-        runs-on: ubuntu-latest
-        outputs:
-            version: ${{ steps.get_version.outputs.VERSION }}
-            label: ${{ steps.get_label.outputs.LABEL }}
-            pre_release: ${{ steps.prerelease_check.outputs.PRE_RELEASE }}
-        steps:
-            - uses: actions/checkout@v3
-            - name: Get Version
-              id: get_version
-              # E.g. converts ref/tags/v0.0.1 -> 0.0.1
-              run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -c 1-)" >> $GITHUB_OUTPUT
-            - name: Get Label
-              id: get_label
-              # E.g. converts 0.0.1-beta.1 -> beta
-              run: echo "LABEL=$(echo ${{ steps.get_version.outputs.VERSION }} | awk -F '-' '{split($2, arr, "."); print arr[1]}')" >> $GITHUB_OUTPUT
-            - name: Check for Pre-Release or Release
-              id: prerelease_check
-              # perform secret check & put boolean result as an output
-              run: |
-                  if [ "${{ steps.get_label.outputs.LABEL }}" != '' ]; then
-                    echo "PRE_RELEASE=true" >> $GITHUB_OUTPUT
-                  else
-                    echo "PRE_RELEASE=false" >> $GITHUB_OUTPUT
-                  fi
-    create-release:
-        needs: [define-variables]
-        name: Create Github Release
-        if: needs.define-variables.outputs.pre_release == 'false'
-        runs-on: ubuntu-latest
-        env:
-            NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
-        steps:
-            - uses: actions/checkout@v3
-            - name: Build Plugin
-              run: |
-                  npm install
-                  npm run version
-                  npm run build
-            - uses: "marvinpinto/action-automatic-releases@latest"
-              name: Publish Release
-              with:
-                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  prerelease: false
-                  title: ${{ needs.define-variables.outputs.version }}
-                  files: |
-                      main.js
-                      manifest.json
-                      styles.css
-    create-prerelease:
-        needs: [define-variables]
-        name: Create Github Pre-Release
-        if: needs.define-variables.outputs.pre_release == 'true'
-        runs-on: ubuntu-latest
-        env:
-            NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
-        steps:
-            - uses: actions/checkout@v3
-            - name: Build Plugin
-              run: |
-                  npm install
-                  npm run version
-                  npm run build
-            - uses: "marvinpinto/action-automatic-releases@latest"
-              name: Publish Release
-              with:
-                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  prerelease: true
-                  title: ${{ needs.define-variables.outputs.version }}
-                  files: |
-                      main.js
-                      manifest.json
-                      styles.css
+  define-variables:
+    name: Defining and extracting Variables
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+      label: ${{ steps.get_label.outputs.LABEL }}
+      pre_release: ${{ steps.prerelease_check.outputs.PRE_RELEASE }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get Version
+        id: get_version
+        # E.g. converts ref/tags/v0.0.1 -> 0.0.1
+        run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -c 1-)" >> $GITHUB_OUTPUT
+      - name: Get Label
+        id: get_label
+        # E.g. converts 0.0.1-beta.1 -> beta
+        run: echo "LABEL=$(echo ${{ steps.get_version.outputs.VERSION }} | awk -F '-' '{split($2, arr, "."); print arr[1]}')" >> $GITHUB_OUTPUT
+      - name: Check for Pre-Release or Release
+        id: prerelease_check
+        # perform secret check & put boolean result as an output
+        run: |
+          if [ "${{ steps.get_label.outputs.LABEL }}" != '' ]; then
+            echo "PRE_RELEASE=true" >> $GITHUB_OUTPUT
+          else
+            echo "PRE_RELEASE=false" >> $GITHUB_OUTPUT
+          fi
+  create-release:
+    needs: [define-variables]
+    name: Create Github Release
+    if: needs.define-variables.outputs.pre_release == 'false'
+    runs-on: ubuntu-latest
+    env:
+      NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Plugin
+        run: |
+          npm install
+          npm run version
+          npm run build
+      - uses: 'marvinpinto/action-automatic-releases@latest'
+        name: Publish Release
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          prerelease: false
+          title: ${{ needs.define-variables.outputs.version }}
+          files: |
+            main.js
+            manifest.json
+            styles.css
+  create-prerelease:
+    needs: [define-variables]
+    name: Create Github Pre-Release
+    if: needs.define-variables.outputs.pre_release == 'true'
+    runs-on: ubuntu-latest
+    env:
+      NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Plugin
+        run: |
+          npm install
+          npm run version
+          npm run build
+      - uses: 'marvinpinto/action-automatic-releases@latest'
+        name: Publish Release
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          prerelease: true
+          title: ${{ needs.define-variables.outputs.version }}
+          files: |
+            main.js
+            manifest.json
+            styles.css

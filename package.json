@@ -8,8 +8,8 @@
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json package.json",
 		"prepare": "husky",
-		"prettier": "prettier --write .",
-		"check": "prettier --check ."
+		"prettier": "prettier --config ./.prettierrc --write .",
+		"check": "prettier --config ./.prettierrc --check ."
 	},
 	"keywords": [],
 	"author": "Aaron Czichon <obsidian@aaronczichon.de>",

@@ -1,5 +1,5 @@
-import { App, PluginSettingTab } from "obsidian";
-import MapboxPlugin from "../main";
+import { App, PluginSettingTab } from 'obsidian';
+import MapboxPlugin from '../main';
 import {
 	apiTokenSetting,
 	coordinatesReverseOrder,
@@ -8,7 +8,7 @@ import {
 	markerColorSetting,
 	markerSizeSetting,
 	markerUrlSetting,
-} from "./plugin-settings.control";
+} from './plugin-settings.control';
 
 export class LocationSettingTab extends PluginSettingTab {
 	plugin: MapboxPlugin;
