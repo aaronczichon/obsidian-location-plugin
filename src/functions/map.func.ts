@@ -42,9 +42,7 @@ export const getStaticMapImageUrl = (
 	}
 
 	const mapStyle = style || settings.mapStyle;
-
 	const mapZoom = zoom || settings.mapZoom;
-
 	const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markerUrl}(${longitude},${latitude})/${longitude},${latitude},${mapZoom}/800x400?access_token=${settings.mapboxToken}`;
 
 	return imageUrl;
