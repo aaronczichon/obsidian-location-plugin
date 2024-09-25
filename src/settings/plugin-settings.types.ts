@@ -18,12 +18,22 @@ export const DEFAULT_SETTINGS: Partial<LocationPluginSettings> = {
 	reverseOrder: false,
 };
 
-export type LocationBlockConfiguration = {
-	latitude?: string;
-	longitude?: string;
-	searchQuery?: string;
+export type BlockSettingsConfiguration = {
 	makiIcon?: string;
 	markerUrl?: string;
 	style?: string;
 	zoom?: string;
+};
+
+export type MultiLocationBlockConfiguration = BlockSettingsConfiguration & {
+	locations: Array<{
+		latitude: number;
+		longitude: number;
+	}>;
+};
+
+export type LocationBlockConfiguration = BlockSettingsConfiguration & {
+	latitude?: string;
+	longitude?: string;
+	searchQuery?: string;
 };
