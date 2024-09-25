@@ -1,6 +1,7 @@
 import { Plugin } from 'obsidian';
 import { checkVersionUpdate } from './functions/version-hint.func';
 import { processLocationCodeBlock } from './processors/process-code.func';
+import { processMultiLocationCodeBlock } from './processors/process-multi-locations.func';
 import { LocationSettingTab } from './settings/plugin-settings.tab';
 import { DEFAULT_SETTINGS, LocationPluginSettings } from './settings/plugin-settings.types';
 
@@ -16,6 +17,9 @@ export default class MapboxPlugin extends Plugin {
 		// Code blocks are used in this plugin to render the maps.
 		this.registerMarkdownCodeBlockProcessor('location', (source: string, el: HTMLElement) =>
 			processLocationCodeBlock(source, el, this.settings),
+		);
+		this.registerMarkdownCodeBlockProcessor('multi-location', (source: string, el: HTMLElement) =>
+			processMultiLocationCodeBlock(source, el, this.settings),
 		);
 
 		// Adding the UI settings tab to the Obsidian preferences.

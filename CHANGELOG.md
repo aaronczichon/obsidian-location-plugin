@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Next] - 2024-09-20
 
+### Added
+
+- [🚀] Added new `multi-location` block support. You can now add multiple markers to one image
+
 ### Changed
 
 - [⚙️] Code structure to support new processor blocks
