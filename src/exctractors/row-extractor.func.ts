@@ -71,5 +71,5 @@ export const findMultipleCoordinates = (rows: string[]): string[][] => {
 			if (!match) return;
 			return [match[1], match[3]];
 		})
-		.filter((coordinates) => coordinates !== undefined);
+		.filter((coordinates) => coordinates !== undefined) as string[][];
 };
