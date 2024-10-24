@@ -1,4 +1,5 @@
 import { Plugin } from 'obsidian';
+import { addNewLocationFromClipboard } from './commands/new-from-clipboard.func';
 import { checkVersionUpdate } from './functions/version-hint.func';
 import { processLocationCodeBlock } from './processors/process-code.func';
 import { processMultiLocationCodeBlock } from './processors/process-multi-locations.func';
@@ -12,6 +13,9 @@ export default class MapboxPlugin extends Plugin {
 		// Load the settings initially and check if this is a new version of the plugin.
 		await this.loadSettings();
 		await checkVersionUpdate(this);
+
+		// register commands
+		addNewLocationFromClipboard(this);
 
 		// Register the processors for the given code blocks.
 		// Code blocks are used in this plugin to render the maps.
