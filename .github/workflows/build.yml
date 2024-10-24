@@ -24,6 +24,21 @@ jobs:
         run: npm install
       - name: Build plugin
         run: npm run build
+  build-documentation:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        working-directory: ./documentation
+        run: npm install
+      - name: Build plugin
+        working-directory: ./documentation
+        run: npm run build
   run-validations:
     name: Validate Code
     runs-on: ubuntu-latest
