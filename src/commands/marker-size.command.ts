@@ -22,7 +22,7 @@ const showModalForMarkerSize = async (plugin: MapboxPlugin) => {
 export const changeMarkerSizeCommand = async (plugin: MapboxPlugin) => {
 	plugin.addCommand({
 		id: 'change-marker-size',
-		name: 'Change marker size',
+		name: 'Change default marker size',
 		callback: () => showModalForMarkerSize(plugin),
 	});
 };

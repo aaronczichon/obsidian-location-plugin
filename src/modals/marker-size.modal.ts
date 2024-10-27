@@ -5,7 +5,7 @@ import { markerSizeSetting } from '../settings/plugin-settings.control';
 export class MarkerSizeModal extends Modal {
 	constructor(plugin: MapboxPlugin, onSubmit: (result: string) => void) {
 		super(plugin.app);
-		this.titleEl.setText('Change marker size');
+		this.titleEl.setText('Change default marker size');
 
 		let size: 's' | 'm' | 'l' = plugin.settings.markerSize;
 		markerSizeSetting(

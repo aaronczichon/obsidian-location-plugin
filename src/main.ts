@@ -1,6 +1,9 @@
 import { Plugin } from 'obsidian';
 import { changeApiTokenCommand } from './commands/api-token.command';
+import { changeDefaultMarkerUrlCommand } from './commands/custom-marker.command';
 import { changeMapStyleCommand } from './commands/map-style.command';
+import { changeDefaultMapZoomLevelCommand } from './commands/map-zoom.command';
+import { changeDefaultMarkerColorCommand } from './commands/marker-color.command';
 import { changeMarkerSizeCommand } from './commands/marker-size.command';
 import { addNewLocationFromClipboard } from './commands/new-from-clipboard.command';
 import { toggleReverseCoordinates } from './commands/toggle-reverse.command';
@@ -23,6 +26,9 @@ export default class MapboxPlugin extends Plugin {
 		changeMarkerSizeCommand(this);
 		changeApiTokenCommand(this);
 		changeMapStyleCommand(this);
+		changeDefaultMapZoomLevelCommand(this);
+		changeDefaultMarkerColorCommand(this);
+		changeDefaultMarkerUrlCommand(this);
 		toggleReverseCoordinates(this);
 
 		// Register the processors for the given code blocks.
