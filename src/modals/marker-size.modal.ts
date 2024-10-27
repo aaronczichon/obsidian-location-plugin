@@ -1,24 +1,16 @@
-import { App, Modal, Setting } from 'obsidian';
+import { Modal, Setting } from 'obsidian';
+import MapboxPlugin from '../main';
+import { markerSizeSetting } from '../settings/plugin-settings.control';
 
 export class MarkerSizeModal extends Modal {
-	constructor(app: App, currentSize: 's' | 'm' | 'l', onSubmit: (result: string) => void) {
-		super(app);
+	constructor(plugin: MapboxPlugin, onSubmit: (result: string) => void) {
+		super(plugin.app);
 		this.titleEl.setText('Change marker size');
 
-		let size: 's' | 'm' | 'l' = currentSize;
-		new Setting(this.contentEl)
-			.setName('Marker Size')
-			.setDesc('Size of the marker on the map. This is ignored if a custom marker url is set.')
-			.addDropdown((text) =>
-				text
-					.addOption('s', 'small')
-					.addOption('m', 'medium')
-					.addOption('l', 'large')
-					.setValue(currentSize)
-					.onChange(async (value) => {
-						size = value as 's' | 'm' | 'l';
-					}),
-			);
+		let size: 's' | 'm' | 'l' = plugin.settings.markerSize;
+		markerSizeSetting(this.contentEl, plugin, async (value: string) => {
+			size = value as 's' | 'm' | 'l';
+		});
 
 		new Setting(this.contentEl).addButton((btn) =>
 			btn

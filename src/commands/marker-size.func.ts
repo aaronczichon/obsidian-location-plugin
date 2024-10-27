@@ -8,7 +8,7 @@ import { MarkerSizeModal } from '../modals/marker-size.modal';
  * @param plugin instance of the MapboxPlugin (required for getting settings and app instance)
  */
 const showModalForMarkerSize = async (plugin: MapboxPlugin) => {
-	new MarkerSizeModal(plugin.app, plugin.settings.markerSize, async (result) => {
+	new MarkerSizeModal(plugin, async (result) => {
 		plugin.settings.markerSize = result as 's' | 'm' | 'l';
 		plugin.saveData(plugin.settings);
 		new Notice('Marker size changed. Reload your view.');
@@ -19,7 +19,7 @@ const showModalForMarkerSize = async (plugin: MapboxPlugin) => {
  * Used to register a new marker size command.
  * @param plugin instance of the MapboxPlugin
  */
-export const changeMarkerSize = async (plugin: MapboxPlugin) => {
+export const changeMarkerSizeCommand = async (plugin: MapboxPlugin) => {
 	plugin.addCommand({
 		id: 'change-marker-size',
 		name: 'Change marker size',

@@ -23,12 +23,30 @@ export class LocationSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		apiTokenSetting(containerEl, this.plugin);
-		mapStyleSetting(containerEl, this.plugin);
-		markerSizeSetting(containerEl, this.plugin);
-		markerColorSetting(containerEl, this.plugin);
-		markerUrlSetting(containerEl, this.plugin);
-		mapZoomSetting(containerEl, this.plugin);
+		apiTokenSetting(containerEl, this.plugin, async (value: string) => {
+			this.plugin.settings.mapboxToken = value;
+			await this.plugin.saveSettings();
+		});
+		mapStyleSetting(containerEl, this.plugin, async (value: string) => {
+			this.plugin.settings.mapStyle = value;
+			await this.plugin.saveSettings();
+		});
+		markerSizeSetting(containerEl, this.plugin, async (value: string) => {
+			this.plugin.settings.markerSize = value as 's' | 'm' | 'l';
+			await this.plugin.saveSettings();
+		});
+		markerColorSetting(containerEl, this.plugin, async (value: string) => {
+			this.plugin.settings.markerColor = value.replace('#', '');
+			await this.plugin.saveSettings();
+		});
+		markerUrlSetting(containerEl, this.plugin, async (value: string) => {
+			this.plugin.settings.markerUrl = value;
+			await this.plugin.saveSettings();
+		});
+		mapZoomSetting(containerEl, this.plugin, async (value: string) => {
+			this.plugin.settings.mapZoom = value;
+			await this.plugin.saveSettings();
+		});
 		coordinatesReverseOrder(containerEl, this.plugin);
 	}
 }
