@@ -1,9 +1,5 @@
 import { Plugin } from 'obsidian';
-import {
-	changeMarkerSizeLarge,
-	changeMarkerSizeMedium,
-	changeMarkerSizeSmall,
-} from './commands/marker-size.func';
+import { changeMarkerSize } from './commands/marker-size.func';
 import { addNewLocationFromClipboard } from './commands/new-from-clipboard.func';
 import { toggleReverseCoordinates } from './commands/toggle-reverse.func';
 import { checkVersionUpdate } from './functions/version-hint.func';
@@ -22,9 +18,7 @@ export default class MapboxPlugin extends Plugin {
 
 		// register commands
 		addNewLocationFromClipboard(this);
-		changeMarkerSizeSmall(this);
-		changeMarkerSizeMedium(this);
-		changeMarkerSizeLarge(this);
+		changeMarkerSize(this);
 		toggleReverseCoordinates(this);
 
 		// Register the processors for the given code blocks.
