@@ -5,12 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Next] - 2024-10-27
+
+### Added
+
+- [🚀] Added command support for default map style, marker color, custom marker URL and API token update
+
 ## [Next] - 2024-10-23
 
 ### Added
 
-- [🚀] Added new `multi-location` block support. You can now add multiple markers to one image
 - [🚀] Documentation site with Docusaurus
+- [🚀] Added command support for marker size and reverse order
+
+## [Next] - 2024-09-20
+
+### Added
+
+- [🚀] Added new `multi-location` block support. You can now add multiple markers to one image
 
 ### Changed
 
