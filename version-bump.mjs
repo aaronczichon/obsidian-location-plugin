@@ -17,3 +17,7 @@ writeFileSync('manifest.json', JSON.stringify(manifest, null, '\t'));
 let packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
 packageJson.version = targetVersion;
 writeFileSync('package.json', JSON.stringify(packageJson, null, '\t'));
+
+let packageJson = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+packageJson.version = targetVersion;
+writeFileSync('package-lock.json', JSON.stringify(packageJson, null, '\t'));
