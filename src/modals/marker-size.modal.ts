@@ -8,9 +8,11 @@ export class MarkerSizeModal extends Modal {
 		this.titleEl.setText('Change marker size');
 
 		let size: 's' | 'm' | 'l' = plugin.settings.markerSize;
-		markerSizeSetting(this.contentEl, plugin, async (value: string) => {
-			size = value as 's' | 'm' | 'l';
-		});
+		markerSizeSetting(
+			this.contentEl,
+			plugin,
+			async (value: string) => (size = value as 's' | 'm' | 'l'),
+		);
 
 		new Setting(this.contentEl).addButton((btn) =>
 			btn

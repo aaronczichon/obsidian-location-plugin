@@ -1,7 +1,8 @@
 import { Plugin } from 'obsidian';
-import { changeMarkerSizeCommand } from './commands/marker-size.func';
-import { addNewLocationFromClipboard } from './commands/new-from-clipboard.func';
-import { toggleReverseCoordinates } from './commands/toggle-reverse.func';
+import { changeApiTokenCommand } from './commands/api-token.command';
+import { changeMarkerSizeCommand } from './commands/marker-size.command';
+import { addNewLocationFromClipboard } from './commands/new-from-clipboard.command';
+import { toggleReverseCoordinates } from './commands/toggle-reverse.command';
 import { checkVersionUpdate } from './functions/version-hint.func';
 import { processLocationCodeBlock } from './processors/process-code.func';
 import { processMultiLocationCodeBlock } from './processors/process-multi-locations.func';
@@ -19,6 +20,7 @@ export default class MapboxPlugin extends Plugin {
 		// register commands
 		addNewLocationFromClipboard(this);
 		changeMarkerSizeCommand(this);
+		changeApiTokenCommand(this);
 		toggleReverseCoordinates(this);
 
 		// Register the processors for the given code blocks.
