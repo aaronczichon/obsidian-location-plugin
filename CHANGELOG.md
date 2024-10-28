@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [🚀] Added command support for default map style, marker color, custom marker URL and API token update
+- [🚀] Added first PoC support for interactive maps (and single marker)
 
 ## [Next] - 2024-10-23
 

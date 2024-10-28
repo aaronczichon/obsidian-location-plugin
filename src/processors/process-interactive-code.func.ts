@@ -73,8 +73,12 @@ export const processInteractiveLocationCodeBlock = async (
 				zoom: parseInt(extractedData.zoom || settings.mapZoom), // starting zoom
 			});
 			map.on('load', () => {
+				const el = extractedData.makiIcon
+					? createMarkerIcon(extractedData.makiIcon, settings.markerColor, settings.mapboxToken)
+					: undefined;
 				new mapboxgl.Marker({
 					color: `#${settings.markerColor}`,
+					element: el,
 				})
 					.setLngLat([lng, lat])
 					.addTo(map);
@@ -86,6 +90,18 @@ export const processInteractiveLocationCodeBlock = async (
 			5000,
 		);
 	}
+};
+
+const createMarkerIcon = (makiIcon: string, color: string, apiToken: string) => {
+	const el = document.createElement('div');
+	el.className = 'marker';
+
+	// Set the marker's icon
+	el.style.backgroundImage = `url(https://api.mapbox.com/v4/marker/pin-m-${makiIcon}+${color}.png?access_token=${apiToken})`;
+	el.style.width = '30px';
+	el.style.height = '71px';
+
+	return el;
 };
 
 const processCodeBlock = (source: string) => {
