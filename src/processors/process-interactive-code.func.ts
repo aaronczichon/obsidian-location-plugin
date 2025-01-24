@@ -1,3 +1,4 @@
+import mapboxgl from 'mapbox-gl';
 import { Notice } from 'obsidian';
 import {
 	findLatitude,
@@ -9,18 +10,14 @@ import {
 	findMarkerUrl,
 	findSearchQuery,
 } from '../exctractors/row-extractor.func';
-import {
-	addStaticImageToContainer,
-	getStaticMapImageUrl,
-	hasMapboxToken,
-} from '../functions/map.func';
+import { hasMapboxToken } from '../functions/map.func';
 import { processLocationSearch } from '../functions/process-location-search.func';
 import {
 	LocationBlockConfiguration,
 	LocationPluginSettings,
 } from '../settings/plugin-settings.types';
 
-export const processLocationCodeBlock = async (
+export const processInteractiveLocationCodeBlock = async (
 	source: string,
 	el: HTMLElement,
 	settings: LocationPluginSettings,
@@ -57,24 +54,56 @@ export const processLocationCodeBlock = async (
 			extractedData.latitude = extractedData.longitude;
 			extractedData.longitude = temp;
 		}
-		const imageUrl = getStaticMapImageUrl(settings, extractedData);
-		addStaticImageToContainer(el, imageUrl);
-		if (!extractedData.searchQuery) return;
 
-		// if a search query was used, render the address as text
-		// render in the address of the location as text
-		// allows user to confirm the location is the intended one
-		const searchInfoElement = document.createElement('p');
-		searchInfoElement.innerText = address;
-		searchInfoElement.classList.add('mapbox-image-info');
-		el.appendChild(searchInfoElement);
-		// if not a search then use the long-lat coordinates input by user
+		// create new element where we append the map
+		const divElement = document.createElement('div');
+		divElement.classList.add('mapbox-image');
+		divElement.classList.add('mapbox-interactive-map');
+		divElement.style.width = '100%';
+		divElement.style.height = '400px';
+		const id = `map-${Math.random().toString(36).substr(2, 9)}`;
+		divElement.id = id;
+		el.appendChild(divElement);
+		setTimeout(() => {
+			const lng = parseFloat(extractedData.longitude!);
+			const lat = parseFloat(extractedData.latitude!);
+			if (isNaN(lng) || isNaN(lat)) return;
+			const map = new mapboxgl.Map({
+				container: id, // container ID
+				style: `mapbox://styles/mapbox/${extractedData.style || settings.mapStyle}`, // style URL
+				center: [lng, lat], // starting position [lng, lat]
+				zoom: parseInt(extractedData.zoom || settings.mapZoom), // starting zoom
+			});
+			map.on('load', () => {
+				const el = extractedData.makiIcon
+					? createMarkerIcon(extractedData.makiIcon, settings.markerColor, settings.mapboxToken)
+					: undefined;
+				new mapboxgl.Marker({
+					color: `#${settings.markerColor}`,
+					element: el,
+				})
+					.setLngLat([lng, lat])
+					.addTo(map);
+			});
+		}, 1500);
 	} catch (e) {
 		new Notice(
 			'Error processing location code block. Please check syntax or missing settings.',
 			5000,
 		);
 	}
+};
+
+const createMarkerIcon = (makiIcon: string, color: string, apiToken: string) => {
+	const el = document.createElement('div');
+	el.className = 'marker';
+
+	// Set the marker's icon
+	el.style.backgroundImage = `url(https://api.mapbox.com/v4/marker/pin-m-${makiIcon}+${color}.png?access_token=${apiToken})`;
+	el.style.width = '30px';
+	el.style.height = '71px';
+
+	return el;
 };
 
 const processCodeBlock = (source: string) => {
