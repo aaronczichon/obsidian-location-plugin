@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [🚀] Deployment to Cloudflare Pages + Warning for `under development` of documentation
 
+### Changed
+
+- [⚙️] ci: Updated build workflow to use update version of `mainfest.json` file
+
 ## [Next] - 2024-10-27
 
 ### Added
