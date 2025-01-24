@@ -2,3 +2,5 @@ dist/**
 node_modules/**
 *.js
 *.yaml
+documentation/.docusaurus/**
+documentation/build/**

@@ -1,9 +1,6 @@
-import { requestUrl } from "obsidian";
+import { requestUrl } from 'obsidian';
 
-export const processLocationSearch = async (
-	query: string = "",
-	accessToken: string,
-) => {
+export const processLocationSearch = async (query: string = '', accessToken: string) => {
 	const mapbox_id: string = await hitSuggestAPI(query, accessToken);
 	const result: any = await hitRetrieveAPI(mapbox_id, accessToken);
 	const properties = result.json.features[0].properties;
@@ -19,7 +16,7 @@ const hitSuggestAPI = async (query: string, accessToken: string) => {
 	const suggestObject = await requestUrl(suggestUrl);
 	const result = await suggestObject.json;
 	const mapbox_id = result.suggestions[0].mapbox_id;
-	console.log("***mapbox_id found***" + mapbox_id);
+	console.log('***mapbox_id found***' + mapbox_id);
 	return mapbox_id;
 };
 
