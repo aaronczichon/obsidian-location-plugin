@@ -59,6 +59,8 @@ export const processInteractiveLocationCodeBlock = async (
 		const divElement = document.createElement('div');
 		divElement.classList.add('mapbox-image');
 		divElement.classList.add('mapbox-interactive-map');
+		divElement.style.width = '100%';
+		divElement.style.height = '400px';
 		const id = `map-${Math.random().toString(36).substr(2, 9)}`;
 		divElement.id = id;
 		el.appendChild(divElement);
