@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import DevWarning from '@site/src/components/DevWarning';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
@@ -30,9 +31,10 @@ export default function Home(): JSX.Element {
 	const { siteConfig } = useDocusaurusContext();
 	return (
 		<Layout
-			title={`Hello from ${siteConfig.title}`}
-			description="Description will go into a meta tag in <head />"
+			title={`${siteConfig.title}`}
+			description="Plugin for rendering mapbox maps inside your Obsidian notes."
 		>
+			<DevWarning />
 			<HomepageHeader />
 			<main>
 				<HomepageFeatures />
