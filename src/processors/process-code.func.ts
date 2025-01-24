@@ -58,7 +58,7 @@ export const processLocationCodeBlock = async (
 			extractedData.longitude = temp;
 		}
 		const imageUrl = getStaticMapImageUrl(settings, extractedData);
-		addStaticImageToContainer(settings, extractedData, el, imageUrl);
+		addStaticImageToContainer(el, imageUrl);
 		if (!extractedData.searchQuery) return;
 
 		// if a search query was used, render the address as text

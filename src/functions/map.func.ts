@@ -82,12 +82,7 @@ export const hasMapboxToken = (settings: LocationPluginSettings) => {
 	return true;
 };
 
-export const addStaticImageToContainer = (
-	settings: LocationPluginSettings,
-	extractedData: LocationBlockConfiguration,
-	el: HTMLElement,
-	url: string,
-) => {
+export const addStaticImageToContainer = (el: HTMLElement, url: string) => {
 	try {
 		const imageElement = document.createElement('img');
 		imageElement.src = url;

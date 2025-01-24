@@ -44,7 +44,7 @@ export const processMultiLocationCodeBlock = async (
 			}));
 		}
 		const imageUrl = getStaticMultiMapImageUrl(settings, extractedData);
-		addStaticImageToContainer(settings, extractedData, el, imageUrl);
+		addStaticImageToContainer(el, imageUrl);
 	} catch (e) {
 		new Notice(
 			'Error processing location code block. Please check syntax or missing settings.',
