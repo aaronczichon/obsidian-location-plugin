@@ -1,15 +1,15 @@
 {
 	"name": "mapbox-location",
-	"version": "1.3.0",
+	"version": "2.0.0",
 	"description": "Show a map inside your notes with a specific format.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json package.json",
+		"version": "node version-bump.mjs && git add manifest.json versions.json package.json package-lock.json",
 		"prepare": "husky",
-		"prettier": "prettier --write .",
-		"check": "prettier --check ."
+		"prettier": "prettier --config ./.prettierrc --write .",
+		"check": "prettier --config ./.prettierrc --check ."
 	},
 	"keywords": [],
 	"author": "Aaron Czichon <obsidian@aaronczichon.de>",

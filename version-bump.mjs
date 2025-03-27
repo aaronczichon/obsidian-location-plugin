@@ -1,12 +1,12 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from 'fs';
 
 const targetVersion = process.env.NPM_PACKAGE_VERSION;
 
 // read minAppVersion from manifest.json and bump version to target version
-let manifest = JSON.parse(readFileSync("manifest.json", "utf8"));
+let manifest = JSON.parse(readFileSync('manifest.json', 'utf8'));
 const { minAppVersion } = manifest;
 manifest.version = targetVersion;
-writeFileSync("manifest.json", JSON.stringify(manifest, null, "\t"));
+writeFileSync('manifest.json', JSON.stringify(manifest, null, '\t'));
 
 // update versions.json with target version and minAppVersion from manifest.json
 // let versions = JSON.parse(readFileSync("versions.json", "utf8"));
@@ -14,6 +14,10 @@ writeFileSync("manifest.json", JSON.stringify(manifest, null, "\t"));
 // writeFileSync("versions.json", JSON.stringify(versions, null, "\t"));
 
 // update package.json with version update
-let packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+let packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
 packageJson.version = targetVersion;
-writeFileSync("package.json", JSON.stringify(packageJson, null, "\t"));
+writeFileSync('package.json', JSON.stringify(packageJson, null, '\t'));
+
+let packageJson = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+packageJson.version = targetVersion;
+writeFileSync('package-lock.json', JSON.stringify(packageJson, null, '\t'));
