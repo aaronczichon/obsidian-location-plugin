@@ -34,7 +34,7 @@ export default function Home(): JSX.Element {
 			title={`${siteConfig.title}`}
 			description="Plugin for rendering mapbox maps inside your Obsidian notes."
 		>
-			<DevWarning />
+			{/* <DevWarning /> */}
 			<HomepageHeader />
 			<main>
 				<HomepageFeatures />
