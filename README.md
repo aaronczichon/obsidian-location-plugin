@@ -8,21 +8,6 @@ Welcome to the Obsidian Location Plugin! This plugin allows you to generate loca
 
 You can simply use the code block with `location` as the language identifier. If you provide then longitude and latitude, the plugin will generate a map image for that location. If you provide a search term the plugin will fetch the most relevant result and generate a map image for that location.
 
-## Example Usage - using coordinates
-
-\```location  
-Latitude: 44.64266326577057  
-Longitude: -63.57530151565183  
-\```
-
-Or
-\```location  
-[44.64266326577057, -63.57530151565183]  
-\```
-
-This is how it looks rendered:
-![Screenshot of obsidian with rendered location image](/docs/rendered.png)
-
 ## Full Documentation
 
 The documentation for the usage can be found here: [https://obsidian-location.czichon.cloud](https://obsidian-location.czichon.cloud).
