@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Getting Started
+# Installation
 
 For installing the plugin go to the Obsidian settings and click on "Community plugins".  
 Click "Browse" and search for "Mapbox Location Image" and click on the "Install" button.
