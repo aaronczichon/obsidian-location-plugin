@@ -1,6 +1,6 @@
 {
 	"name": "mapbox-location",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Show a map inside your notes with a specific format.",
 	"main": "main.js",
 	"scripts": {
