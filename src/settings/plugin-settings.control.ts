@@ -1,4 +1,5 @@
 import { Notice, Setting } from 'obsidian';
+import { mapboxStyles } from '../functions/style.func';
 import MapboxPlugin from '../main';
 
 export const apiTokenSetting = (
@@ -59,19 +60,19 @@ export const mapStyleSetting = (
 	plugin: MapboxPlugin,
 	callback: Function,
 ) => {
+	const stylesAsRecords = mapboxStyles.reduce(
+		(acc, style) => {
+			acc[style.mapboxName] = style.settingsName;
+			return acc;
+		},
+		{} as Record<string, string>,
+	);
 	new Setting(containerEl)
 		.setName('Default map style')
 		.setDesc('Select the default style which is used for your maps.')
 		.addDropdown((text) =>
 			text
-				.addOption('streets-v12', 'Streets')
-				.addOption('outdoors-v12', 'Outdoors')
-				.addOption('light-v11', 'Light')
-				.addOption('dark-v11', 'Dark')
-				.addOption('satellite-v9', 'Satellite')
-				.addOption('satellite-streets-v12', 'Satellite Streets')
-				.addOption('navigation-day-v1', 'Navigation Day')
-				.addOption('navigation-night-v1', 'Navigation Night')
+				.addOptions(stylesAsRecords)
 				.setValue(plugin.settings.mapStyle)
 				.onChange(async (value) => callback(value)),
 		);
