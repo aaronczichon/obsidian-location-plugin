@@ -31,28 +31,6 @@ jobs:
           else
             echo "PRE_RELEASE=false" >> $GITHUB_OUTPUT
           fi
-  update-versions:
-    needs: [define-variables]
-    name: Update Manifest Version
-    runs-on: ubuntu-latest
-    if: needs.define-variables.outputs.pre_release == 'false'
-    env:
-      NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 18
-      - run: npm run version
-      - name: Commit & Push Version Increment
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: '[skip ci] updated mainfest version'
-          branch: ${{ github.ref_name }}
   create-release:
     needs: [define-variables]
     name: Create Github Release

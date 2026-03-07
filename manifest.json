@@ -1,8 +1,8 @@
 {
 	"id": "mapbox-location",
 	"name": "Mapbox Location Image",
-	"version": "2.0.0",
-	"minAppVersion": "1.5.12",
+	"version": "2.1.0",
+	"minAppVersion": "1.8.9",
 	"description": "Show a map inside your notes with a specific format.",
 	"author": "Aaron Czichon",
 	"authorUrl": "https://aaronczichon.de",

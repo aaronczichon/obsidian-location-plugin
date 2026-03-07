@@ -1,6 +1,8 @@
 // This file is used to define functions which extracting specific information from the rows
 // of a code block. The extracted information is then used to configure the map settings.
 
+import { mapboxStyles } from '../functions/style.func';
+
 export const findLatitudeAndLongitude = (rows: string[]) => {
 	const regex = /^\[\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\s*\]$/;
 	let latLong = rows.find((l) => regex.test(l.toLowerCase()));
@@ -38,7 +40,10 @@ export const findMarkerIcon = (rows: string[]) => {
 
 export const findMapStyle = (rows: string[]) => {
 	let mapStyle = rows.find((l) => l.toLowerCase().startsWith('style:'));
-	if (mapStyle) mapStyle = mapStyle.toLocaleLowerCase().replace('style:', '').trim();
+	if (mapStyle) {
+		mapStyle = mapStyle.toLocaleLowerCase().replace('style:', '').trim();
+		mapStyle = mapboxStyles.find((s) => s.blockName === mapStyle)?.mapboxName;
+	}
 	return mapStyle;
 };
 

@@ -5,44 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Next] - 2025-01-24
+## [2.1.0] - Next
 
-### Changed
+### Added
 
-- [⚙️] Removed some unused parameters
+- [🚀] Processing dataview variables before rendering map (#54)
 
-## [Next] - 2024-11-21
+## [2.0.2] - 2025-05-22
+
+### Fixed
+
+- [💎] Code blocks now support styles according to documentation (not mapbox strings) #51
+
+## [2.0.1] - 2025-05-12
+
+### Fixed
+
+- [🐛] Fixed issue with empty data file
+
+## [2.0.0] - 2025-01-24
 
 ### Added
 
 - [🚀] Deployment to Cloudflare Pages + Warning for `under development` of documentation
-
-### Changed
-
-- [⚙️] ci: Updated build workflow to use update version of `mainfest.json` file
-
-## [Next] - 2024-10-27
-
-### Added
-
 - [🚀] Added command support for default map style, marker color, custom marker URL and API token update
 - [🚀] Added first PoC support for interactive maps (and single marker)
-
-## [Next] - 2024-10-23
-
-### Added
-
 - [🚀] Documentation site with Docusaurus
 - [🚀] Added command support for marker size and reverse order
-
-## [Next] - 2024-09-20
-
-### Added
-
 - [🚀] Added new `multi-location` block support. You can now add multiple markers to one image
 
 ### Changed
 
+- [⚙️] Removed some unused parameters
+- [⚙️] ci: Updated build workflow to use update version of `mainfest.json` file
 - [⚙️] Code structure to support new processor blocks
 - [⚙️] Added `.prettierrc` config to force correct formatting (e.g. single quotes)
 - [⚙️] Adde better typings for some functions
