@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [🚀] Processing dataview variables before rendering map (#54)
+- [🚀] `multi-location` supports now different marker icons per location (#48)
+- [🚀] `interactive-location` support now multiple locations (#47)
 
 ## [2.0.2] - 2025-05-22
 
