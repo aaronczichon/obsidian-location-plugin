@@ -1,10 +1,10 @@
 import { Notice } from 'obsidian';
 import {
+	findLocationMarkers,
 	findMapStyle,
 	findMapZoom,
 	findMarkerIcon,
 	findMarkerUrl,
-	findMultipleCoordinates,
 } from '../exctractors/row-extractor.func';
 import {
 	addStaticImageToContainer,
@@ -38,9 +38,10 @@ export const processMultiLocationCodeBlock = async (
 		// if we need to flip the order of the coordinates
 		// then we need to do it before rendering the image
 		if (settings.reverseOrder) {
-			extractedData.locations = extractedData.locations.map(({ latitude, longitude }) => ({
-				latitude: longitude,
-				longitude: latitude,
+			extractedData.locations = extractedData.locations.map((location) => ({
+				...location,
+				latitude: location.longitude,
+				longitude: location.latitude,
 			}));
 		}
 		const imageUrl = getStaticMultiMapImageUrl(settings, extractedData);
@@ -56,17 +57,14 @@ export const processMultiLocationCodeBlock = async (
 const processCodeBlock = (source: string) => {
 	const rows = source.split('\n');
 
-	const coordinates = findMultipleCoordinates(rows);
+	const locations = findLocationMarkers(rows);
 	const markerUrl = findMarkerUrl(rows);
 	const makiIcon = findMarkerIcon(rows);
 	const mapStyle = findMapStyle(rows);
 	const mapZoom = findMapZoom(rows);
 
 	const config: MultiLocationBlockConfiguration = {
-		locations: coordinates.map(([latitude, longitude]) => ({
-			latitude: parseFloat(latitude),
-			longitude: parseFloat(longitude),
-		})),
+		locations,
 		markerUrl,
 		style: mapStyle,
 		zoom: mapZoom,
