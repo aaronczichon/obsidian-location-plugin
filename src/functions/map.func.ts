@@ -1,6 +1,7 @@
 import { Notice } from 'obsidian';
 import {
 	LocationBlockConfiguration,
+	LocationMarker,
 	LocationPluginSettings,
 	MultiLocationBlockConfiguration,
 } from '../settings/plugin-settings.types';
@@ -50,21 +51,28 @@ export const getStaticMultiMapImageUrl = (
 	settings: LocationPluginSettings,
 	config: MultiLocationBlockConfiguration,
 ): string => {
-	const markerUrl = getMarkerUrl(settings, config.markerUrl, config.makiIcon);
-
 	if (config.markerUrl && config.makiIcon) {
 		throw 'Both marker URL and Maki icon are set. Setting both is not a valid combination.';
 	}
 
+	if (config.markerUrl && config.locations.some((location) => location.makiIcon)) {
+		throw 'Both marker URL and Maki icon are set. Setting both is not a valid combination.';
+	}
+
 	const mapStyle = config.style || settings.mapStyle;
-	const mapZoom = config.zoom || settings.mapZoom;
 	const markerString: string[] = [];
 	config.locations.forEach((loc) => {
+		const markerUrl = getMarkerUrl(settings, config.markerUrl, loc.makiIcon || config.makiIcon);
 		markerString.push(`${markerUrl}(${loc.longitude},${loc.latitude})`);
 	});
 	const markersCombined = markerString.join(',');
+
+	if (!config.zoom) {
+		return `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markersCombined}/auto/800x400?padding=40&access_token=${settings.mapboxToken}`;
+	}
+
 	const center = findCenter(config.locations);
-	const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markersCombined}/${center.longitude},${center.latitude},${mapZoom}/800x400?access_token=${settings.mapboxToken}`;
+	const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/${mapStyle}/static/${markersCombined}/${center.longitude},${center.latitude},${config.zoom}/800x400?access_token=${settings.mapboxToken}`;
 
 	return imageUrl;
 };
@@ -94,8 +102,8 @@ export const addStaticImageToContainer = (el: HTMLElement, url: string) => {
 	}
 };
 
-const getMiddle = (prop: string, markers: { latitude: number; longitude: number }[]) => {
-	let values = markers.map((m) => m[prop as keyof typeof m]);
+const getMiddle = (prop: 'latitude' | 'longitude', markers: LocationMarker[]) => {
+	let values = markers.map((marker) => marker[prop]);
 	let min = Math.min(...values);
 	let max = Math.max(...values);
 	if (prop === 'longitude' && max - min > 180) {
@@ -110,7 +118,7 @@ const getMiddle = (prop: string, markers: { latitude: number; longitude: number 
 	return result;
 };
 
-const findCenter = (markers: { latitude: number; longitude: number }[]) => {
+const findCenter = (markers: LocationMarker[]) => {
 	return {
 		latitude: getMiddle('latitude', markers),
 		longitude: getMiddle('longitude', markers),

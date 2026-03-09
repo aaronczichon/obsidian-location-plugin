@@ -8,6 +8,7 @@ import { changeDefaultMarkerColorCommand } from './commands/marker-color.command
 import { changeMarkerSizeCommand } from './commands/marker-size.command';
 import { addNewLocationFromClipboard } from './commands/new-from-clipboard.command';
 import { toggleReverseCoordinates } from './commands/toggle-reverse.command';
+import { resolveDataviewExpressions } from './functions/dataview.func';
 import { checkVersionUpdate } from './functions/version-hint.func';
 import { processLocationCodeBlock } from './processors/process-code.func';
 import { processInteractiveLocationCodeBlock } from './processors/process-interactive-code.func';
@@ -37,16 +38,25 @@ export default class MapboxPlugin extends Plugin {
 
 		// Register the processors for the given code blocks.
 		// Code blocks are used in this plugin to render the maps.
-		this.registerMarkdownCodeBlockProcessor('location', (source: string, el: HTMLElement) =>
-			processLocationCodeBlock(source, el, this.settings),
-		);
-		this.registerMarkdownCodeBlockProcessor('multi-location', (source: string, el: HTMLElement) =>
-			processMultiLocationCodeBlock(source, el, this.settings),
+		// Each processor resolves Dataview inline expressions (e.g. =this.lat)
+		// before processing the code block, enabling dynamic coordinates via Dataview.
+		this.registerMarkdownCodeBlockProcessor('location', (source: string, el: HTMLElement, ctx) => {
+			const resolvedSource = resolveDataviewExpressions(source, this.app, ctx.sourcePath);
+			return processLocationCodeBlock(resolvedSource, el, this.settings);
+		});
+		this.registerMarkdownCodeBlockProcessor(
+			'multi-location',
+			(source: string, el: HTMLElement, ctx) => {
+				const resolvedSource = resolveDataviewExpressions(source, this.app, ctx.sourcePath);
+				return processMultiLocationCodeBlock(resolvedSource, el, this.settings);
+			},
 		);
 		this.registerMarkdownCodeBlockProcessor(
 			'interactive-location',
-			(source: string, el: HTMLElement) =>
-				processInteractiveLocationCodeBlock(source, el, this.settings),
+			(source: string, el: HTMLElement, ctx) => {
+				const resolvedSource = resolveDataviewExpressions(source, this.app, ctx.sourcePath);
+				return processInteractiveLocationCodeBlock(resolvedSource, el, this.settings);
+			},
 		);
 
 		// Adding the UI settings tab to the Obsidian preferences.

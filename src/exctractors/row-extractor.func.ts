@@ -2,12 +2,16 @@
 // of a code block. The extracted information is then used to configure the map settings.
 
 import { mapboxStyles } from '../functions/style.func';
+import { LocationMarker } from '../settings/plugin-settings.types';
+
+const coordinateRegex = /^\[\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\s*\]$/;
+const namedCoordinateRegex =
+	/^(?:(['"]?)(.+?)\1\s*:\s*)?\[\s*(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)\s*\]\s*(?:,\s*([a-z0-9-]+))?\s*$/i;
 
 export const findLatitudeAndLongitude = (rows: string[]) => {
-	const regex = /^\[\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\s*\]$/;
-	let latLong = rows.find((l) => regex.test(l.toLowerCase()));
+	let latLong = rows.find((l) => coordinateRegex.test(l.trim()));
 	if (latLong) {
-		const match = latLong.match(regex);
+		const match = latLong.trim().match(coordinateRegex);
 		if (match) {
 			return [match[1], match[3]];
 		}
@@ -60,6 +64,29 @@ export const findSearchQuery = (rows: string[]) => {
 };
 
 /**
+ * Extracts multiple coordinates with optional marker names and per-marker icons.
+ * Supported formats are `[latitude, longitude]` and `Name:[latitude, longitude], icon`.
+ * Quotes around the name are optional.
+ */
+export const findLocationMarkers = (rows: string[]): LocationMarker[] => {
+	return rows
+		.map((row) => {
+			const match = row.trim().match(namedCoordinateRegex);
+			if (!match) return;
+
+			const [, , rawName, latitude, longitude, makiIcon] = match;
+			const name = rawName?.trim();
+			return {
+				latitude: parseFloat(latitude),
+				longitude: parseFloat(longitude),
+				name: name ? name : undefined,
+				makiIcon: makiIcon?.trim() || undefined,
+			};
+		})
+		.filter((marker) => marker !== undefined) as LocationMarker[];
+};
+
+/**
  * Extracts multiple coordinates from the rows of a code block.
  * The coordinates are expected to be in the format [latitude, longitude].
  * @example
@@ -68,13 +95,8 @@ export const findSearchQuery = (rows: string[]) => {
  * @returns an array of multiple coordinates
  */
 export const findMultipleCoordinates = (rows: string[]): string[][] => {
-	const regex = /^\[\s*(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)\s*\]$/;
-	const filteredRows = rows.filter((l) => regex.test(l.toLowerCase()));
-	return filteredRows
-		.map((l) => {
-			const match = l.match(regex);
-			if (!match) return;
-			return [match[1], match[3]];
-		})
-		.filter((coordinates) => coordinates !== undefined) as string[][];
+	return findLocationMarkers(rows).map(({ latitude, longitude }) => [
+		latitude.toString(),
+		longitude.toString(),
+	]);
 };

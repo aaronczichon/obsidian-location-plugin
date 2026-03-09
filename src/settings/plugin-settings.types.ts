@@ -25,15 +25,20 @@ export type BlockSettingsConfiguration = {
 	zoom?: string;
 };
 
+export type LocationMarker = {
+	latitude: number;
+	longitude: number;
+	name?: string;
+	makiIcon?: string;
+};
+
 export type MultiLocationBlockConfiguration = BlockSettingsConfiguration & {
-	locations: Array<{
-		latitude: number;
-		longitude: number;
-	}>;
+	locations: LocationMarker[];
 };
 
 export type LocationBlockConfiguration = BlockSettingsConfiguration & {
 	latitude?: string;
 	longitude?: string;
 	searchQuery?: string;
+	locations?: LocationMarker[];
 };
