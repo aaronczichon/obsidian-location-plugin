@@ -49,12 +49,12 @@ jobs:
           npm install
           npm run version
           npm run build
-      - uses: 'marvinpinto/action-automatic-releases@latest'
+      - uses: softprops/action-gh-release@v2
         name: Publish Release
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ secrets.GITHUB_TOKEN }}'
           prerelease: false
-          title: ${{ needs.define-variables.outputs.version }}
+          name: ${{ needs.define-variables.outputs.version }}
           files: |
             main.js
             manifest.json
@@ -77,12 +77,12 @@ jobs:
           npm install
           npm run version
           npm run build
-      - uses: 'marvinpinto/action-automatic-releases@latest'
+      - uses: softprops/action-gh-release@v2
         name: Publish Release
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ secrets.GITHUB_TOKEN }}'
           prerelease: true
-          title: ${{ needs.define-variables.outputs.version }}
+          name: ${{ needs.define-variables.outputs.version }}
           files: |
             main.js
             manifest.json
