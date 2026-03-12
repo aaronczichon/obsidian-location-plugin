@@ -40,9 +40,14 @@ jobs:
       NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Build Plugin
         run: |
           npm install
+          npm run version
           npm run build
       - uses: 'marvinpinto/action-automatic-releases@latest'
         name: Publish Release
@@ -63,6 +68,10 @@ jobs:
       NPM_PACKAGE_VERSION: ${{ needs.define-variables.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Build Plugin
         run: |
           npm install
