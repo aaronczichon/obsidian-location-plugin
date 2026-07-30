@@ -47,7 +47,6 @@ jobs:
       - name: Build Plugin
         run: |
           npm install
-          npm run version
           npm run build
       - uses: softprops/action-gh-release@v2
         name: Publish Release
@@ -75,7 +74,6 @@ jobs:
       - name: Build Plugin
         run: |
           npm install
-          npm run version
           npm run build
       - uses: softprops/action-gh-release@v2
         name: Publish Release
